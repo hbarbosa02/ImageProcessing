@@ -28,7 +28,7 @@ namespace ImageProcessing {
     };
 
     QImage rgbImg2QImage(RGBImage &Imrgb); //ok
-    QImage getRed(QImage &img);
+
 
     QImage bitMap2Image(const LinAlg::Matrix<int> &imgBitMap); //com problema
     LinAlg::Matrix<int> bitMap(RGBImage &rgbImg); //com problema
