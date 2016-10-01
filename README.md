@@ -3,5 +3,5 @@ Biblioteca em C++ para processamento de imagens, criada como meta da matéria de
 
 # Métodos criados até o momento
 * Classe RGBImage
-  ** RGBImage();
-  ** RGBImage(const QImage &image);
+  * RGBImage();
+  * RGBImage(const QImage &image);
