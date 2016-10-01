@@ -3,7 +3,7 @@ Biblioteca em C++ para processamento de imagens, criada como meta da matéria de
 
 # Métodos criados até o momento
 
-* Classe RGBImage
+* Classe RGBImage:
   * Construtores:
     * RGBImage();
     * RGBImage(const QImage &image);
@@ -20,7 +20,7 @@ Biblioteca em C++ para processamento de imagens, criada como meta da matéria de
     * Height();
     * Width();
     
-* namespace ImageProcessing
+* namespace ImageProcessing:
   * rgbImg2QImage(RGBImage &Imrgb);
   * bitMap2Image(const LinAlg::Matrix<int> &imgBitMap);
   * subtraction(RGBImage &lhs, RGBImage &rhs);
