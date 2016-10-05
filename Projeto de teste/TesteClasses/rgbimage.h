@@ -33,6 +33,7 @@ namespace ImageProcessing
 
             unsigned Height(){return this->height;} //ok
             unsigned Width(){return this->width;} //ok
+            //Criar operações com RGBImage:
 
         private:
             LinAlg::Matrix<int> red, green, blue, gray;
@@ -41,13 +42,13 @@ namespace ImageProcessing
             void initRGB(const QImage &image); //ok
     };
 
-    QImage rgbImg2QImage(RGBImage &Imrgb); //ok
-    QImage bitMap2Image(const LinAlg::Matrix<int> &imgBitMap); //não foi testada
+    QImage rgbImg2QImage(RGBImage Imrgb); //ok
+    QImage bitMap2Image(LinAlg::Matrix<int> imgBitMap); //ok
 
-    RGBImage subtraction(RGBImage &lhs, RGBImage &rhs); //não foi testada
     //Criar operações com RGBImage:
 
-    LinAlg::Matrix<int> bitMap(RGBImage &rgbImg); //não foi testada
+    LinAlg::Matrix<int> bitMap(RGBImage rgbImg); //ok
+    LinAlg::Matrix<int> Histogram(RGBImage img); //não foi testada
 }
 #include "TesteClasses/rgbimage.hpp"
 #endif // RGBIMAGE_H
