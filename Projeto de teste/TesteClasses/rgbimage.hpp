@@ -88,6 +88,49 @@ QImage ImageProcessing::RGBImage::grayImage()
     return img;
 }
 
+ImageProcessing::RGBImage& ImageProcessing::RGBImage::operator=  (const ImageProcessing::RGBImage& OtherRGBImage)
+{
+    this->red = OtherRGBImage.getRed();
+    this->green = OtherRGBImage.getGreen();
+    this->blue = OtherRGBImage.getBlue();
+    this->gray = OtherRGBImage.getGray();
+    this->a = 255;
+
+    this->width = OtherRGBImage.Width();
+    this->height = OtherRGBImage.Height();
+}
+
+ImageProcessing::RGBImage& ImageProcessing::RGBImage::operator+=  (const int& rhs)
+{
+    this->red += rhs;
+    this->green += rhs;
+    this->blue += rhs;
+    this->gray += rhs;
+}
+
+ImageProcessing::RGBImage& ImageProcessing::RGBImage::operator-=  (const int& rhs)
+{
+    this->red -= rhs;
+    this->green -= rhs;
+    this->blue -= rhs;
+    this->gray -= rhs;
+}
+
+ImageProcessing::RGBImage& ImageProcessing::RGBImage::operator*=  (const int& rhs)
+{
+    this->red *= rhs;
+    this->green *= rhs;
+    this->blue *= rhs;
+    this->gray *= rhs;
+}
+
+ImageProcessing::RGBImage& ImageProcessing::RGBImage::operator/=  (const int& rhs)
+{
+    this->red /= rhs;
+    this->green /= rhs;
+    this->blue /= rhs;
+    this->gray /= rhs;
+}
 ///------------------------------------------------------------------------------------
 ///------------------------------------------------------------------------------------
 ///------------------------------------------------------------------------------------

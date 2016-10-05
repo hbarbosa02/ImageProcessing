@@ -21,19 +21,30 @@ namespace ImageProcessing
 //                     LinAlg::Matrix<int> b,
 //                     unsigned a);
 
-            LinAlg::Matrix<int> getRed(){return this->red;} //ok
-            LinAlg::Matrix<int> getGreen(){return this->green;} //ok
-            LinAlg::Matrix<int> getBlue(){return this->blue;} //ok
-            LinAlg::Matrix<int> getGray(){return this->gray;} //ok
+            LinAlg::Matrix<int> getRed() const {return this->red;} //ok
+            LinAlg::Matrix<int> getGreen() const {return this->green;} //ok
+            LinAlg::Matrix<int> getBlue() const {return this->blue;} //ok
+            LinAlg::Matrix<int> getGray() const {return this->gray;} //ok
 
             QImage redImage(); //ok
             QImage greenImage(); //ok
             QImage blueImage(); //ok
             QImage grayImage(); //ok
 
-            unsigned Height(){return this->height;} //ok
-            unsigned Width(){return this->width;} //ok
+            unsigned Height() const {return this->height;} //ok
+            unsigned Width() const {return this->width;} //ok
+
             //Criar operações com RGBImage:
+            ImageProcessing::RGBImage& operator=  (const ImageProcessing::RGBImage& OtherRGBImage); //não foi testada
+//            ImageProcessing::RGBImage& operator+=  (const ImageProcessing::RGBImage& OtherRGBImage){} //não foi testada
+            ImageProcessing::RGBImage& operator+=  (const int& rhs); //não foi testada
+//            ImageProcessing::RGBImage& operator-=  (const ImageProcessing::RGBImage& OtherRGBImage){} //não foi testada
+            ImageProcessing::RGBImage& operator-=  (const int& rhs); //não foi testada
+//            ImageProcessing::RGBImage& operator*=  (const ImageProcessing::RGBImage& OtherRGBImage){} //não foi testada
+            ImageProcessing::RGBImage& operator*=  (const int& rhs); //não foi testada
+//             ImageProcessing::RGBImage& operator/=  (const ImageProcessing::RGBImage& OtherRGBImage){} //não foi testada
+            ImageProcessing::RGBImage& operator/=  (const int& rhs); //não foi testada
+
 
         private:
             LinAlg::Matrix<int> red, green, blue, gray;
