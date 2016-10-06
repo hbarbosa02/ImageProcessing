@@ -12,7 +12,7 @@ namespace ImageProcessing
     {
         public:
             RGBImage(){}
-            RGBImage(const QImage &image); //ok
+            RGBImage(QImage image); //ok
             RGBImage(LinAlg::Matrix<int> r,
                      LinAlg::Matrix<int> g,
                      LinAlg::Matrix<int> b);
@@ -25,11 +25,6 @@ namespace ImageProcessing
             LinAlg::Matrix<int> getGreen() const {return this->green;} //ok
             LinAlg::Matrix<int> getBlue() const {return this->blue;} //ok
             LinAlg::Matrix<int> getGray() const {return this->gray;} //ok
-
-            QImage redImage(); //ok
-            QImage greenImage(); //ok
-            QImage blueImage(); //ok
-            QImage grayImage(); //ok
 
             unsigned Height() const {return this->height;} //ok
             unsigned Width() const {return this->width;} //ok
@@ -53,10 +48,25 @@ namespace ImageProcessing
             void initRGB(const QImage &image); //ok
     };
 
+    //Criar operações com RGBImage:
+    ImageProcessing::RGBImage& operator+  (ImageProcessing::RGBImage lhs, const int& rhs){ return lhs += rhs;} //não foi testada
+    ImageProcessing::RGBImage& operator+  (const int& lhs, ImageProcessing::RGBImage rhs){ return rhs += lhs;} //não foi testada
+
+    ImageProcessing::RGBImage& operator-  (ImageProcessing::RGBImage lhs, const int& rhs){ return lhs -= rhs;} //não foi testada
+    ImageProcessing::RGBImage& operator-  (const int& lhs, ImageProcessing::RGBImage rhs){ return rhs -= lhs;} //não foi testada
+
+    ImageProcessing::RGBImage& operator*  (ImageProcessing::RGBImage lhs, const int& rhs){ return lhs *= rhs;} //não foi testada
+    ImageProcessing::RGBImage& operator*  (const int& lhs, ImageProcessing::RGBImage rhs){ return rhs *= lhs;} //não foi testada
+
+    ImageProcessing::RGBImage& operator/  (ImageProcessing::RGBImage lhs, const int& rhs){ return lhs /= rhs;} //não foi testada
+    ImageProcessing::RGBImage& operator/  (const int& lhs, ImageProcessing::RGBImage rhs){ return rhs /= lhs;} //não foi testada
+
+    QImage redImage(RGBImage Imrgb); //ok
+    QImage greenImage(RGBImage Imrgb); //ok
+    QImage blueImage(RGBImage Imrgb); //ok
+    QImage grayImage(RGBImage Imrgb); //ok
     QImage rgbImg2QImage(RGBImage Imrgb); //ok
     QImage bitMap2Image(LinAlg::Matrix<int> imgBitMap); //ok
-
-    //Criar operações com RGBImage:
 
     LinAlg::Matrix<int> bitMap(RGBImage rgbImg); //ok
     LinAlg::Matrix<int> Histogram(RGBImage img); //não foi testada

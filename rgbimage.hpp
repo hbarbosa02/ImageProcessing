@@ -1,6 +1,6 @@
 #include "rgbimage.h"
 
-ImageProcessing::RGBImage::RGBImage(const QImage &image)
+ImageProcessing::RGBImage::RGBImage(QImage image)
 {
     this->height = image.height();
     this->width = image.width();
@@ -42,52 +42,6 @@ void ImageProcessing::RGBImage::initRGB(const QImage &image)
         }
 }
 
-QImage ImageProcessing::RGBImage::redImage()
-{
-    QImage img(this->height,this->width,QImage::Format_RGB32);
-
-    for(unsigned i = 0; i < this->height; ++i)
-        for(unsigned j = 0; j < this->width; ++j)
-            img.setPixel(i,j,QColor(this->red(i+1,j+1),0,0).rgb());
-
-    return img;
-}
-
-QImage ImageProcessing::RGBImage::greenImage()
-{
-    QImage img(this->height,this->width,QImage::Format_RGB32);
-
-    for(unsigned i = 0; i < this->height; ++i)
-        for(unsigned j = 0; j < this->width; ++j)
-            img.setPixel(i,j,QColor(0,this->green(i+1,j+1),0).rgb());
-
-    return img;
-}
-
-QImage ImageProcessing::RGBImage::blueImage()
-{
-    QImage img(this->height,this->width,QImage::Format_RGB32);
-
-    for(unsigned i = 0; i < this->height; ++i)
-        for(unsigned j = 0; j < this->width; ++j)
-            img.setPixel(i,j,QColor(0,0,this->blue(i+1,j+1)).rgb());
-
-    return img;
-}
-
-QImage ImageProcessing::RGBImage::grayImage()
-{
-    QImage img(this->height,this->width,QImage::Format_RGB32);
-
-    for(unsigned i = 0; i < this->height; ++i)
-        for(unsigned j = 0; j < this->width; ++j)
-            img.setPixel(i,j,QColor(this->getGray()(i+1,j+1),
-                                    this->getGray()(i+1,j+1),
-                                    this->getGray()(i+1,j+1)).rgb());
-
-    return img;
-}
-
 ImageProcessing::RGBImage& ImageProcessing::RGBImage::operator=  (const ImageProcessing::RGBImage& OtherRGBImage)
 {
     this->red = OtherRGBImage.getRed();
@@ -98,6 +52,8 @@ ImageProcessing::RGBImage& ImageProcessing::RGBImage::operator=  (const ImagePro
 
     this->width = OtherRGBImage.Width();
     this->height = OtherRGBImage.Height();
+
+    return *this;
 }
 
 ImageProcessing::RGBImage& ImageProcessing::RGBImage::operator+=  (const int& rhs)
@@ -106,6 +62,8 @@ ImageProcessing::RGBImage& ImageProcessing::RGBImage::operator+=  (const int& rh
     this->green += rhs;
     this->blue += rhs;
     this->gray += rhs;
+
+    return *this;
 }
 
 ImageProcessing::RGBImage& ImageProcessing::RGBImage::operator-=  (const int& rhs)
@@ -114,6 +72,8 @@ ImageProcessing::RGBImage& ImageProcessing::RGBImage::operator-=  (const int& rh
     this->green -= rhs;
     this->blue -= rhs;
     this->gray -= rhs;
+
+    return *this;
 }
 
 ImageProcessing::RGBImage& ImageProcessing::RGBImage::operator*=  (const int& rhs)
@@ -122,6 +82,8 @@ ImageProcessing::RGBImage& ImageProcessing::RGBImage::operator*=  (const int& rh
     this->green *= rhs;
     this->blue *= rhs;
     this->gray *= rhs;
+
+    return *this;
 }
 
 ImageProcessing::RGBImage& ImageProcessing::RGBImage::operator/=  (const int& rhs)
@@ -130,11 +92,58 @@ ImageProcessing::RGBImage& ImageProcessing::RGBImage::operator/=  (const int& rh
     this->green /= rhs;
     this->blue /= rhs;
     this->gray /= rhs;
+
+    return *this;
 }
 ///------------------------------------------------------------------------------------
 ///------------------------------------------------------------------------------------
 ///------------------------------------------------------------------------------------
 
+QImage ImageProcessing::redImage(RGBImage Imrgb)
+{
+    QImage img(Imrgb.Height(),Imrgb.Width(),QImage::Format_RGB32);
+
+    for(unsigned i = 0; i < Imrgb.Height(); ++i)
+        for(unsigned j = 0; j < Imrgb.Width(); ++j)
+            img.setPixel(i,j,QColor(Imrgb.getRed()(i+1,j+1),0,0).rgb());
+
+    return img;
+}
+
+QImage ImageProcessing::greenImage(RGBImage Imrgb)
+{
+    QImage img(Imrgb.Height(),Imrgb.Width(),QImage::Format_RGB32);
+
+    for(unsigned i = 0; i < Imrgb.Height(); ++i)
+        for(unsigned j = 0; j < Imrgb.Width(); ++j)
+            img.setPixel(i,j,QColor(Imrgb.getGreen()(i+1,j+1),0,0).rgb());
+
+    return img;
+}
+
+QImage ImageProcessing::blueImage(RGBImage Imrgb)
+{
+    QImage img(Imrgb.Height(),Imrgb.Width(),QImage::Format_RGB32);
+
+    for(unsigned i = 0; i < Imrgb.Height(); ++i)
+        for(unsigned j = 0; j < Imrgb.Width(); ++j)
+            img.setPixel(i,j,QColor(Imrgb.getBlue()(i+1,j+1),0,0).rgb());
+
+    return img;
+}
+
+QImage ImageProcessing::grayImage(RGBImage Imrgb)
+{
+    QImage img(Imrgb.Height(),Imrgb.Width(),QImage::Format_RGB32);
+
+    for(unsigned i = 0; i < Imrgb.Height(); ++i)
+        for(unsigned j = 0; j < Imrgb.Width(); ++j)
+            img.setPixel(i,j,QColor(Imrgb.getGray()(i+1,j+1),
+                                    Imrgb.getGray()(i+1,j+1),
+                                    Imrgb.getGray()(i+1,j+1)).rgb());
+
+    return img;
+}
 QImage ImageProcessing::rgbImg2QImage(RGBImage Imrgb)
 {
     QImage img(Imrgb.Height(),Imrgb.Width(),QImage::Format_RGB32);
