@@ -13,9 +13,9 @@ namespace ImageProcessing
         public:
             RGBImage(){}
             RGBImage(const QImage &image); //ok
-            RGBImage(LinAlg::Matrix<int> r,
-                     LinAlg::Matrix<int> g,
-                     LinAlg::Matrix<int> b);
+            RGBImage(const LinAlg::Matrix<int> &r,
+                     const LinAlg::Matrix<int> &g,
+                     const LinAlg::Matrix<int> &b);
 //            RGBImage(LinAlg::Matrix<int> r,
 //                     LinAlg::Matrix<int> g,
 //                     LinAlg::Matrix<int> b,
@@ -25,11 +25,6 @@ namespace ImageProcessing
             LinAlg::Matrix<int> getGreen() const {return this->green;} //ok
             LinAlg::Matrix<int> getBlue() const {return this->blue;} //ok
             LinAlg::Matrix<int> getGray() const {return this->gray;} //ok
-
-            QImage redImage(); //ok
-            QImage greenImage(); //ok
-            QImage blueImage(); //ok
-            QImage grayImage(); //ok
 
             unsigned Height() const {return this->height;} //ok
             unsigned Width() const {return this->width;} //ok
@@ -53,13 +48,27 @@ namespace ImageProcessing
             void initRGB(const QImage &image); //ok
     };
 
-    QImage rgbImg2QImage(RGBImage Imrgb); //ok
-    QImage bitMap2Image(LinAlg::Matrix<int> imgBitMap); //ok
-
     //Criar operações com RGBImage:
+    ImageProcessing::RGBImage operator+  (ImageProcessing::RGBImage lhs, const int& rhs); //não foi testada
+    ImageProcessing::RGBImage operator+  (const int& lhs, ImageProcessing::RGBImage rhs);//não foi testada
 
-    LinAlg::Matrix<int> bitMap(RGBImage rgbImg); //ok
-    LinAlg::Matrix<int> Histogram(RGBImage img); //não foi testada
+    ImageProcessing::RGBImage operator-  (ImageProcessing::RGBImage lhs, const int& rhs); //não foi testada
+    ImageProcessing::RGBImage operator-  (const int& lhs, ImageProcessing::RGBImage rhs); //não foi testada
+
+    ImageProcessing::RGBImage operator*  (ImageProcessing::RGBImage lhs, const int& rhs); //não foi testada
+    ImageProcessing::RGBImage operator*  (const int& lhs, ImageProcessing::RGBImage rhs); //não foi testada
+
+    ImageProcessing::RGBImage operator/  (ImageProcessing::RGBImage lhs, const int& rhs); //não foi testada
+    ImageProcessing::RGBImage operator/  (const int& lhs, ImageProcessing::RGBImage rhs); //não foi testada
+
+    QImage redImage(const ImageProcessing::RGBImage &Imrgb); //ok
+    QImage greenImage(const ImageProcessing::RGBImage &Imrgb); //ok
+    QImage blueImage(const ImageProcessing::RGBImage &Imrgb); //ok
+    QImage grayImage(const ImageProcessing::RGBImage &Imrgb); //ok
+    QImage rgbImg2QImage(const ImageProcessing::RGBImage &Imrgb); //ok
+    QImage bitMap2Image(const LinAlg::Matrix<int> &imgBitMap); //ok
+
+    LinAlg::Matrix<int> bitMap(const RGBImage rgbImg); //ok
+    LinAlg::Matrix<int> Histogram(const RGBImage img); //não foi testada
 }
-#include "TesteClasses/rgbimage.hpp"
 #endif // RGBIMAGE_H

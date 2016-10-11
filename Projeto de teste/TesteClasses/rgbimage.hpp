@@ -1,4 +1,4 @@
-#include "rgbimage.h"
+#include "TesteClasses/rgbimage.h"
 
 ImageProcessing::RGBImage::RGBImage(const QImage &image)
 {
@@ -14,7 +14,7 @@ ImageProcessing::RGBImage::RGBImage(const QImage &image)
     this->initRGB(image);
 }
 
-ImageProcessing::RGBImage::RGBImage(LinAlg::Matrix<int> r, LinAlg::Matrix<int> g, LinAlg::Matrix<int> b)
+ImageProcessing::RGBImage::RGBImage(const LinAlg::Matrix<int> &r, const LinAlg::Matrix<int> &g, const LinAlg::Matrix<int> &b)
 {
     this->height = r.getNumberOfRows();
     this->width = r.getNumberOfColumns();
@@ -42,52 +42,6 @@ void ImageProcessing::RGBImage::initRGB(const QImage &image)
         }
 }
 
-QImage ImageProcessing::RGBImage::redImage()
-{
-    QImage img(this->height,this->width,QImage::Format_RGB32);
-
-    for(unsigned i = 0; i < this->height; ++i)
-        for(unsigned j = 0; j < this->width; ++j)
-            img.setPixel(i,j,QColor(this->red(i+1,j+1),0,0).rgb());
-
-    return img;
-}
-
-QImage ImageProcessing::RGBImage::greenImage()
-{
-    QImage img(this->height,this->width,QImage::Format_RGB32);
-
-    for(unsigned i = 0; i < this->height; ++i)
-        for(unsigned j = 0; j < this->width; ++j)
-            img.setPixel(i,j,QColor(0,this->green(i+1,j+1),0).rgb());
-
-    return img;
-}
-
-QImage ImageProcessing::RGBImage::blueImage()
-{
-    QImage img(this->height,this->width,QImage::Format_RGB32);
-
-    for(unsigned i = 0; i < this->height; ++i)
-        for(unsigned j = 0; j < this->width; ++j)
-            img.setPixel(i,j,QColor(0,0,this->blue(i+1,j+1)).rgb());
-
-    return img;
-}
-
-QImage ImageProcessing::RGBImage::grayImage()
-{
-    QImage img(this->height,this->width,QImage::Format_RGB32);
-
-    for(unsigned i = 0; i < this->height; ++i)
-        for(unsigned j = 0; j < this->width; ++j)
-            img.setPixel(i,j,QColor(this->getGray()(i+1,j+1),
-                                    this->getGray()(i+1,j+1),
-                                    this->getGray()(i+1,j+1)).rgb());
-
-    return img;
-}
-
 ImageProcessing::RGBImage& ImageProcessing::RGBImage::operator=  (const ImageProcessing::RGBImage& OtherRGBImage)
 {
     this->red = OtherRGBImage.getRed();
@@ -98,6 +52,8 @@ ImageProcessing::RGBImage& ImageProcessing::RGBImage::operator=  (const ImagePro
 
     this->width = OtherRGBImage.Width();
     this->height = OtherRGBImage.Height();
+
+    return *this;
 }
 
 ImageProcessing::RGBImage& ImageProcessing::RGBImage::operator+=  (const int& rhs)
@@ -106,6 +62,8 @@ ImageProcessing::RGBImage& ImageProcessing::RGBImage::operator+=  (const int& rh
     this->green += rhs;
     this->blue += rhs;
     this->gray += rhs;
+
+    return *this;
 }
 
 ImageProcessing::RGBImage& ImageProcessing::RGBImage::operator-=  (const int& rhs)
@@ -114,6 +72,8 @@ ImageProcessing::RGBImage& ImageProcessing::RGBImage::operator-=  (const int& rh
     this->green -= rhs;
     this->blue -= rhs;
     this->gray -= rhs;
+
+    return *this;
 }
 
 ImageProcessing::RGBImage& ImageProcessing::RGBImage::operator*=  (const int& rhs)
@@ -122,6 +82,8 @@ ImageProcessing::RGBImage& ImageProcessing::RGBImage::operator*=  (const int& rh
     this->green *= rhs;
     this->blue *= rhs;
     this->gray *= rhs;
+
+    return *this;
 }
 
 ImageProcessing::RGBImage& ImageProcessing::RGBImage::operator/=  (const int& rhs)
@@ -130,12 +92,59 @@ ImageProcessing::RGBImage& ImageProcessing::RGBImage::operator/=  (const int& rh
     this->green /= rhs;
     this->blue /= rhs;
     this->gray /= rhs;
+
+    return *this;
 }
 ///------------------------------------------------------------------------------------
 ///------------------------------------------------------------------------------------
 ///------------------------------------------------------------------------------------
 
-QImage ImageProcessing::rgbImg2QImage(RGBImage Imrgb)
+QImage ImageProcessing::redImage(const RGBImage &Imrgb)
+{
+    QImage img(Imrgb.Height(),Imrgb.Width(),QImage::Format_RGB32);
+
+    for(unsigned i = 0; i < Imrgb.Height(); ++i)
+        for(unsigned j = 0; j < Imrgb.Width(); ++j)
+            img.setPixel(i,j,QColor(Imrgb.getRed()(i+1,j+1),0,0).rgb());
+
+    return img;
+}
+
+QImage ImageProcessing::greenImage(const RGBImage &Imrgb)
+{
+    QImage img(Imrgb.Height(),Imrgb.Width(),QImage::Format_RGB32);
+
+    for(unsigned i = 0; i < Imrgb.Height(); ++i)
+        for(unsigned j = 0; j < Imrgb.Width(); ++j)
+            img.setPixel(i,j,QColor(Imrgb.getGreen()(i+1,j+1),0,0).rgb());
+
+    return img;
+}
+
+QImage ImageProcessing::blueImage(const RGBImage &Imrgb)
+{
+    QImage img(Imrgb.Height(),Imrgb.Width(),QImage::Format_RGB32);
+
+    for(unsigned i = 0; i < Imrgb.Height(); ++i)
+        for(unsigned j = 0; j < Imrgb.Width(); ++j)
+            img.setPixel(i,j,QColor(Imrgb.getBlue()(i+1,j+1),0,0).rgb());
+
+    return img;
+}
+
+QImage ImageProcessing::grayImage(const RGBImage &Imrgb)
+{
+    QImage img(Imrgb.Height(),Imrgb.Width(),QImage::Format_RGB32);
+
+    for(unsigned i = 0; i < Imrgb.Height(); ++i)
+        for(unsigned j = 0; j < Imrgb.Width(); ++j)
+            img.setPixel(i,j,QColor(Imrgb.getGray()(i+1,j+1),
+                                    Imrgb.getGray()(i+1,j+1),
+                                    Imrgb.getGray()(i+1,j+1)).rgb());
+
+    return img;
+}
+QImage ImageProcessing::rgbImg2QImage(const RGBImage &Imrgb)
 {
     QImage img(Imrgb.Height(),Imrgb.Width(),QImage::Format_RGB32);
 
@@ -151,7 +160,7 @@ QImage ImageProcessing::rgbImg2QImage(RGBImage Imrgb)
     return img;
 }
 
-QImage ImageProcessing::bitMap2Image(LinAlg::Matrix<int> imgBitMap)
+QImage ImageProcessing::bitMap2Image(const LinAlg::Matrix<int> &imgBitMap)
 {
     QImage img(imgBitMap.getNumberOfRows(),imgBitMap.getNumberOfColumns(),QImage::Format_RGB32);
 
@@ -164,7 +173,7 @@ QImage ImageProcessing::bitMap2Image(LinAlg::Matrix<int> imgBitMap)
     return img;
 }
 
-LinAlg::Matrix<int> ImageProcessing::bitMap(ImageProcessing::RGBImage rgbImg)
+LinAlg::Matrix<int> ImageProcessing::bitMap(const ImageProcessing::RGBImage rgbImg)
 {
     LinAlg::Matrix<int> bitMap = rgbImg.getGray();
 
@@ -180,7 +189,7 @@ LinAlg::Matrix<int> ImageProcessing::bitMap(ImageProcessing::RGBImage rgbImg)
     return bitMap;
 }
 
-LinAlg::Matrix<int> ImageProcessing::Histogram(ImageProcessing::RGBImage img)
+LinAlg::Matrix<int> ImageProcessing::Histogram(const RGBImage img)
 {
     LinAlg::Matrix<int> histogram = LinAlg::Zeros<int>(1,256);
 
@@ -192,4 +201,44 @@ LinAlg::Matrix<int> ImageProcessing::Histogram(ImageProcessing::RGBImage img)
         }
 
     return histogram;
+}
+
+ImageProcessing::RGBImage ImageProcessing::operator+ (ImageProcessing::RGBImage lhs, const int& rhs)
+{
+    return lhs += rhs;
+}
+
+ImageProcessing::RGBImage ImageProcessing::operator+ (const int& lhs, ImageProcessing::RGBImage  rhs)
+{
+    return rhs += lhs;
+}
+
+ImageProcessing::RGBImage ImageProcessing::operator- (ImageProcessing::RGBImage lhs, const int& rhs)
+{
+    return lhs -= rhs;
+}
+
+ImageProcessing::RGBImage ImageProcessing::operator- (const int& lhs, ImageProcessing::RGBImage  rhs)
+{
+    return rhs -= lhs;
+}
+
+ImageProcessing::RGBImage ImageProcessing::operator* (ImageProcessing::RGBImage lhs, const int& rhs)
+{
+    return lhs *= rhs;
+}
+
+ImageProcessing::RGBImage ImageProcessing::operator* (const int& lhs, ImageProcessing::RGBImage  rhs)
+{
+    return rhs *= lhs;
+}
+
+ImageProcessing::RGBImage ImageProcessing::operator/ (ImageProcessing::RGBImage lhs, const int& rhs)
+{
+    return lhs /= rhs;
+}
+
+ImageProcessing::RGBImage ImageProcessing::operator/ (const int& lhs, ImageProcessing::RGBImage  rhs)
+{
+    return rhs /= lhs;
 }

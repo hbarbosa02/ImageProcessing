@@ -12,10 +12,10 @@ namespace ImageProcessing
     {
         public:
             RGBImage(){}
-            RGBImage(QImage image); //ok
-            RGBImage(LinAlg::Matrix<int> r,
-                     LinAlg::Matrix<int> g,
-                     LinAlg::Matrix<int> b);
+            RGBImage(const QImage &image); //ok
+            RGBImage(const LinAlg::Matrix<int> &r,
+                     const LinAlg::Matrix<int> &g,
+                     const LinAlg::Matrix<int> &b);
 //            RGBImage(LinAlg::Matrix<int> r,
 //                     LinAlg::Matrix<int> g,
 //                     LinAlg::Matrix<int> b,
@@ -49,27 +49,26 @@ namespace ImageProcessing
     };
 
     //Criar operações com RGBImage:
-    ImageProcessing::RGBImage& operator+  (ImageProcessing::RGBImage lhs, const int& rhs){ return lhs += rhs;} //não foi testada
-    ImageProcessing::RGBImage& operator+  (const int& lhs, ImageProcessing::RGBImage rhs){ return rhs += lhs;} //não foi testada
+    ImageProcessing::RGBImage operator+  (ImageProcessing::RGBImage lhs, const int& rhs); //não foi testada
+    ImageProcessing::RGBImage operator+  (const int& lhs, ImageProcessing::RGBImage rhs);//não foi testada
 
-    ImageProcessing::RGBImage& operator-  (ImageProcessing::RGBImage lhs, const int& rhs){ return lhs -= rhs;} //não foi testada
-    ImageProcessing::RGBImage& operator-  (const int& lhs, ImageProcessing::RGBImage rhs){ return rhs -= lhs;} //não foi testada
+    ImageProcessing::RGBImage operator-  (ImageProcessing::RGBImage lhs, const int& rhs); //não foi testada
+    ImageProcessing::RGBImage operator-  (const int& lhs, ImageProcessing::RGBImage rhs); //não foi testada
 
-    ImageProcessing::RGBImage& operator*  (ImageProcessing::RGBImage lhs, const int& rhs){ return lhs *= rhs;} //não foi testada
-    ImageProcessing::RGBImage& operator*  (const int& lhs, ImageProcessing::RGBImage rhs){ return rhs *= lhs;} //não foi testada
+    ImageProcessing::RGBImage operator*  (ImageProcessing::RGBImage lhs, const int& rhs); //não foi testada
+    ImageProcessing::RGBImage operator*  (const int& lhs, ImageProcessing::RGBImage rhs); //não foi testada
 
-    ImageProcessing::RGBImage& operator/  (ImageProcessing::RGBImage lhs, const int& rhs){ return lhs /= rhs;} //não foi testada
-    ImageProcessing::RGBImage& operator/  (const int& lhs, ImageProcessing::RGBImage rhs){ return rhs /= lhs;} //não foi testada
+    ImageProcessing::RGBImage operator/  (ImageProcessing::RGBImage lhs, const int& rhs); //não foi testada
+    ImageProcessing::RGBImage operator/  (const int& lhs, ImageProcessing::RGBImage rhs); //não foi testada
 
-    QImage redImage(RGBImage Imrgb); //ok
-    QImage greenImage(RGBImage Imrgb); //ok
-    QImage blueImage(RGBImage Imrgb); //ok
-    QImage grayImage(RGBImage Imrgb); //ok
-    QImage rgbImg2QImage(RGBImage Imrgb); //ok
-    QImage bitMap2Image(LinAlg::Matrix<int> imgBitMap); //ok
+    QImage redImage(const ImageProcessing::RGBImage &Imrgb); //ok
+    QImage greenImage(const ImageProcessing::RGBImage &Imrgb); //ok
+    QImage blueImage(const ImageProcessing::RGBImage &Imrgb); //ok
+    QImage grayImage(const ImageProcessing::RGBImage &Imrgb); //ok
+    QImage rgbImg2QImage(const ImageProcessing::RGBImage &Imrgb); //ok
+    QImage bitMap2Image(const LinAlg::Matrix<int> &imgBitMap); //ok
 
-    LinAlg::Matrix<int> bitMap(RGBImage rgbImg); //ok
-    LinAlg::Matrix<int> Histogram(RGBImage img); //não foi testada
+    LinAlg::Matrix<int> bitMap(const RGBImage rgbImg); //ok
+    LinAlg::Matrix<int> Histogram(const RGBImage img); //não foi testada
 }
-#include "TesteClasses/rgbimage.hpp"
 #endif // RGBIMAGE_H
