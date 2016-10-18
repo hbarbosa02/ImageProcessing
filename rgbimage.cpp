@@ -42,59 +42,59 @@ void ImageProcessing::RGBImage::initRGB(const QImage &image)
         }
 }
 
-ImageProcessing::RGBImage& ImageProcessing::RGBImage::operator=  (const ImageProcessing::RGBImage& OtherRGBImage)
-{
-    this->red = OtherRGBImage.getRed();
-    this->green = OtherRGBImage.getGreen();
-    this->blue = OtherRGBImage.getBlue();
-    this->gray = OtherRGBImage.getGray();
-    this->a = 255;
+//ImageProcessing::RGBImage& ImageProcessing::RGBImage::operator=  (const ImageProcessing::RGBImage& OtherRGBImage)
+//{
+//    this->red = OtherRGBImage.getRed();
+//    this->green = OtherRGBImage.getGreen();
+//    this->blue = OtherRGBImage.getBlue();
+//    this->gray = OtherRGBImage.getGray();
+//    this->a = 255;
 
-    this->width = OtherRGBImage.Width();
-    this->height = OtherRGBImage.Height();
+//    this->width = OtherRGBImage.Width();
+//    this->height = OtherRGBImage.Height();
 
-    return *this;
-}
+//    return *this;
+//}
 
-ImageProcessing::RGBImage& ImageProcessing::RGBImage::operator+=  (const int& rhs)
-{
-    this->red += rhs;
-    this->green += rhs;
-    this->blue += rhs;
-    this->gray += rhs;
+//ImageProcessing::RGBImage& ImageProcessing::RGBImage::operator+=  (const int& rhs)
+//{
+//    this->red += rhs;
+//    this->green += rhs;
+//    this->blue += rhs;
+//    this->gray += rhs;
 
-    return *this;
-}
+//    return *this;
+//}
 
-ImageProcessing::RGBImage& ImageProcessing::RGBImage::operator-=  (const int& rhs)
-{
-    this->red -= rhs;
-    this->green -= rhs;
-    this->blue -= rhs;
-    this->gray -= rhs;
+//ImageProcessing::RGBImage& ImageProcessing::RGBImage::operator-=  (const int& rhs)
+//{
+//    this->red -= rhs;
+//    this->green -= rhs;
+//    this->blue -= rhs;
+//    this->gray -= rhs;
 
-    return *this;
-}
+//    return *this;
+//}
 
-ImageProcessing::RGBImage& ImageProcessing::RGBImage::operator*=  (const int& rhs)
-{
-    this->red *= rhs;
-    this->green *= rhs;
-    this->blue *= rhs;
-    this->gray *= rhs;
+//ImageProcessing::RGBImage& ImageProcessing::RGBImage::operator*=  (const int& rhs)
+//{
+//    this->red *= rhs;
+//    this->green *= rhs;
+//    this->blue *= rhs;
+//    this->gray *= rhs;
 
-    return *this;
-}
+//    return *this;
+//}
 
-ImageProcessing::RGBImage& ImageProcessing::RGBImage::operator/=  (const int& rhs)
-{
-    this->red /= rhs;
-    this->green /= rhs;
-    this->blue /= rhs;
-    this->gray /= rhs;
+//ImageProcessing::RGBImage& ImageProcessing::RGBImage::operator/=  (const int& rhs)
+//{
+//    this->red /= rhs;
+//    this->green /= rhs;
+//    this->blue /= rhs;
+//    this->gray /= rhs;
 
-    return *this;
-}
+//    return *this;
+//}
 ///------------------------------------------------------------------------------------
 ///------------------------------------------------------------------------------------
 ///------------------------------------------------------------------------------------
@@ -203,42 +203,42 @@ LinAlg::Matrix<int> ImageProcessing::Histogram(const RGBImage img)
     return histogram;
 }
 
-ImageProcessing::RGBImage ImageProcessing::operator+ (ImageProcessing::RGBImage lhs, const int& rhs)
-{
-    return lhs += rhs;
-}
+//ImageProcessing::RGBImage ImageProcessing::operator+ (ImageProcessing::RGBImage lhs, const int& rhs)
+//{
+//    return lhs += rhs;
+//}
 
-ImageProcessing::RGBImage ImageProcessing::operator+ (const int& lhs, ImageProcessing::RGBImage  rhs)
-{
-    return rhs += lhs;
-}
+//ImageProcessing::RGBImage ImageProcessing::operator+ (const int& lhs, ImageProcessing::RGBImage  rhs)
+//{
+//    return rhs += lhs;
+//}
 
-ImageProcessing::RGBImage ImageProcessing::operator- (ImageProcessing::RGBImage lhs, const int& rhs)
-{
-    return lhs -= rhs;
-}
+//ImageProcessing::RGBImage ImageProcessing::operator- (ImageProcessing::RGBImage lhs, const int& rhs)
+//{
+//    return lhs -= rhs;
+//}
 
-ImageProcessing::RGBImage ImageProcessing::operator- (const int& lhs, ImageProcessing::RGBImage  rhs)
-{
-    return rhs -= lhs;
-}
+//ImageProcessing::RGBImage ImageProcessing::operator- (const int& lhs, ImageProcessing::RGBImage  rhs)
+//{
+//    return rhs -= lhs;
+//}
 
-ImageProcessing::RGBImage ImageProcessing::operator* (ImageProcessing::RGBImage lhs, const int& rhs)
-{
-    return lhs *= rhs;
-}
+//ImageProcessing::RGBImage ImageProcessing::operator* (ImageProcessing::RGBImage lhs, const int& rhs)
+//{
+//    return lhs *= rhs;
+//}
 
-ImageProcessing::RGBImage ImageProcessing::operator* (const int& lhs, ImageProcessing::RGBImage  rhs)
-{
-    return rhs *= lhs;
-}
+//ImageProcessing::RGBImage ImageProcessing::operator* (const int& lhs, ImageProcessing::RGBImage  rhs)
+//{
+//    return rhs *= lhs;
+//}
 
-ImageProcessing::RGBImage ImageProcessing::operator/ (ImageProcessing::RGBImage lhs, const int& rhs)
-{
-    return lhs /= rhs;
-}
+//ImageProcessing::RGBImage ImageProcessing::operator/ (ImageProcessing::RGBImage lhs, const int& rhs)
+//{
+//    return lhs /= rhs;
+//}
 
-ImageProcessing::RGBImage ImageProcessing::operator/ (const int& lhs, ImageProcessing::RGBImage  rhs)
-{
-    return rhs /= lhs;
-}
+//ImageProcessing::RGBImage ImageProcessing::operator/ (const int& lhs, ImageProcessing::RGBImage  rhs)
+//{
+//    return rhs /= lhs;
+//}

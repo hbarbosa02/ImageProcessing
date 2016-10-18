@@ -29,16 +29,16 @@ namespace ImageProcessing
             unsigned Height() const {return this->height;} //ok
             unsigned Width() const {return this->width;} //ok
 
-            //Criar operações com RGBImage:
-            ImageProcessing::RGBImage& operator=  (const ImageProcessing::RGBImage& OtherRGBImage); //não foi testada
-//            ImageProcessing::RGBImage& operator+=  (const ImageProcessing::RGBImage& OtherRGBImage){} //não foi testada
-            ImageProcessing::RGBImage& operator+=  (const int& rhs); //não foi testada
-//            ImageProcessing::RGBImage& operator-=  (const ImageProcessing::RGBImage& OtherRGBImage){} //não foi testada
-            ImageProcessing::RGBImage& operator-=  (const int& rhs); //não foi testada
-//            ImageProcessing::RGBImage& operator*=  (const ImageProcessing::RGBImage& OtherRGBImage){} //não foi testada
-            ImageProcessing::RGBImage& operator*=  (const int& rhs); //não foi testada
-//             ImageProcessing::RGBImage& operator/=  (const ImageProcessing::RGBImage& OtherRGBImage){} //não foi testada
-            ImageProcessing::RGBImage& operator/=  (const int& rhs); //não foi testada
+//            //Criar operações com RGBImage:
+//            ImageProcessing::RGBImage& operator=  (const ImageProcessing::RGBImage& OtherRGBImage); //não foi testada
+////            ImageProcessing::RGBImage& operator+=  (const ImageProcessing::RGBImage& OtherRGBImage){} //não foi testada
+//            ImageProcessing::RGBImage& operator+=  (const int& rhs); //não foi testada
+////            ImageProcessing::RGBImage& operator-=  (const ImageProcessing::RGBImage& OtherRGBImage){} //não foi testada
+//            ImageProcessing::RGBImage& operator-=  (const int& rhs); //não foi testada
+////            ImageProcessing::RGBImage& operator*=  (const ImageProcessing::RGBImage& OtherRGBImage){} //não foi testada
+//            ImageProcessing::RGBImage& operator*=  (const int& rhs); //não foi testada
+////             ImageProcessing::RGBImage& operator/=  (const ImageProcessing::RGBImage& OtherRGBImage){} //não foi testada
+//            ImageProcessing::RGBImage& operator/=  (const int& rhs); //não foi testada
 
 
         private:
@@ -48,18 +48,18 @@ namespace ImageProcessing
             void initRGB(const QImage &image); //ok
     };
 
-    //Criar operações com RGBImage:
-    ImageProcessing::RGBImage operator+  (ImageProcessing::RGBImage lhs, const int& rhs); //não foi testada
-    ImageProcessing::RGBImage operator+  (const int& lhs, ImageProcessing::RGBImage rhs);//não foi testada
+//    //Criar operações com RGBImage:
+//    ImageProcessing::RGBImage operator+  (ImageProcessing::RGBImage lhs, const int& rhs); //não foi testada
+//    ImageProcessing::RGBImage operator+  (const int& lhs, ImageProcessing::RGBImage rhs);//não foi testada
 
-    ImageProcessing::RGBImage operator-  (ImageProcessing::RGBImage lhs, const int& rhs); //não foi testada
-    ImageProcessing::RGBImage operator-  (const int& lhs, ImageProcessing::RGBImage rhs); //não foi testada
+//    ImageProcessing::RGBImage operator-  (ImageProcessing::RGBImage lhs, const int& rhs); //não foi testada
+//    ImageProcessing::RGBImage operator-  (const int& lhs, ImageProcessing::RGBImage rhs); //não foi testada
 
-    ImageProcessing::RGBImage operator*  (ImageProcessing::RGBImage lhs, const int& rhs); //não foi testada
-    ImageProcessing::RGBImage operator*  (const int& lhs, ImageProcessing::RGBImage rhs); //não foi testada
+//    ImageProcessing::RGBImage operator*  (ImageProcessing::RGBImage lhs, const int& rhs); //não foi testada
+//    ImageProcessing::RGBImage operator*  (const int& lhs, ImageProcessing::RGBImage rhs); //não foi testada
 
-    ImageProcessing::RGBImage operator/  (ImageProcessing::RGBImage lhs, const int& rhs); //não foi testada
-    ImageProcessing::RGBImage operator/  (const int& lhs, ImageProcessing::RGBImage rhs); //não foi testada
+//    ImageProcessing::RGBImage operator/  (ImageProcessing::RGBImage lhs, const int& rhs); //não foi testada
+//    ImageProcessing::RGBImage operator/  (const int& lhs, ImageProcessing::RGBImage rhs); //não foi testada
 
     QImage redImage(const ImageProcessing::RGBImage &Imrgb); //ok
     QImage greenImage(const ImageProcessing::RGBImage &Imrgb); //ok
@@ -71,4 +71,5 @@ namespace ImageProcessing
     LinAlg::Matrix<int> bitMap(const RGBImage rgbImg); //ok
     LinAlg::Matrix<int> Histogram(const RGBImage img); //não foi testada
 }
+
 #endif // RGBIMAGE_H
