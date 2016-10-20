@@ -13,8 +13,7 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
-    TesteClasses/rgbimage.cpp
+        mainwindow.cpp
 
 HEADERS  += mainwindow.h \
     SistemasdeControle/headers/advancedApplication/datarecognition/classification.h \
@@ -112,6 +111,12 @@ HEADERS  += mainwindow.h \
     SistemasdeControle/src/zeroFunctionLib/steffensen.hpp \
     TesteClasses/rna.h \
     TesteClasses/rna.hpp \
-    TesteClasses/rgbimage.h
+    TesteClasses/rgbimage.h \
+    ImageProcessing/rgbimage.h \
+    ImageProcessing/rgbimage.hpp \
+    ImageProcessing/imageprocessing.h \
+    ImageProcessing/imageprocessing.hpp \
+    ImageProcessing/grayimage.h \
+    ImageProcessing/grayimage.hpp
 
 FORMS    += mainwindow.ui

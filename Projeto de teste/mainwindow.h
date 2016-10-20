@@ -3,7 +3,8 @@
 
 #include <QMainWindow>
 #include <QImage>
-#include "TesteClasses/rgbimage.h"
+#include "ImageProcessing/imageprocessing.h"
+#include "ImageProcessing/rgbimage.h"
 
 namespace Ui {
 class MainWindow;
@@ -17,12 +18,8 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-private slots:
-
 private:
     Ui::MainWindow *ui;
-    QImage img;
-    ImageProcessing::RGBImage *rgbimg;
 };
 
 #endif // MAINWINDOW_H
