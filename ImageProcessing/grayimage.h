@@ -18,15 +18,17 @@ namespace ImageProcessing {
             unsigned getWidth() const {return this->width;}
             unsigned getHeight()const {return this->height;}
 
+            ImageProcessing::GrayImage<Type>& operator= (const ImageProcessing::GrayImage<Type>& grayImg);
+
         private:
             LinAlg::Matrix<Type> gray;
             unsigned height, width, a;
     };
 
     template <class Type>
-    ImageProcessing::GrayImage<Type> QImage2GrayImage(const QImage &img); //ok
-    template <class Type>
     LinAlg::Matrix<Type> HistogramGray(const ImageProcessing::GrayImage<Type> &grayimg); //ok
+    template <class Type>
+    ImageProcessing::GrayImage<Type> Rotation(const ImageProcessing::GrayImage<Type> &grayimg, const double &angle);
 }
 #include "ImageProcessing/grayimage.hpp"
 #endif // GRAYIMAGE_H

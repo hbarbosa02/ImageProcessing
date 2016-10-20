@@ -54,7 +54,7 @@ LinAlg::Matrix<Type> ImageProcessing::HistogramRGB(const ImageProcessing::RGBIma
 template <class Type>
 ImageProcessing::RGBImage<Type> ImageProcessing::Rotation(const ImageProcessing::RGBImage<Type> &rgbimg, const double &angle)
 {
-    LinAlg::Matrix<int> pos;
+    LinAlg::Matrix<Type> pos;
 
     LinAlg::Matrix<Type> t1(rgbimg.getWidth(),rgbimg.getHeight()),
                         t2(rgbimg.getWidth(),rgbimg.getHeight()),

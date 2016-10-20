@@ -571,10 +571,9 @@ LinAlg::Matrix<Type> LinAlg::applyingMask(const LinAlg::Matrix<Type> &mat, const
 
     for(unsigned i = 1; i <= rowLim; ++i){
         for(unsigned j = 1; j <= colLim; ++j){
-            aux = mat(from(i)-->(i+mask.getNumberOfRows()-1),from(j)-->(j+mask.getNumberOfColumns()-1));
+            aux = mat(from(i+mask.getNumberOfRows()-1)-->(i),from(j+mask.getNumberOfColumns()-1)-->(j));
             ret(i+rowSum,j+colSum) = LinAlg::sum(LinAlg::multPointToPoint(aux,mask));
         }
     }
-
     return ret;
 }

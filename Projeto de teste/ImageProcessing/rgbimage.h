@@ -2,6 +2,7 @@
 #define RGBIMAGE_H
 
 #include "ImageProcessing/imageprocessing.h"
+#include "SistemasdeControle/headers/primitiveLibs/LinAlg/linalg.h"
 #include "SistemasdeControle/headers/primitiveLibs/LinAlg/matrix.h"
 
 namespace ImageProcessing {
@@ -22,19 +23,18 @@ namespace ImageProcessing {
             unsigned getWidth() const {return this->width;}
             unsigned getHeight()const {return this->height;}
 
+            ImageProcessing::RGBImage<Type>& operator =(const ImageProcessing::RGBImage<Type>& rgbImg);
+
         private:
             LinAlg::Matrix<Type> red,green,blue,rgb;
             unsigned height, width, a;
     };
 
     template <class Type>
-    ImageProcessing::RGBImage<Type> QImage2RGBImage(const QImage &img); //ok
-    template <class Type>
     LinAlg::Matrix<Type> HistogramRGB(const ImageProcessing::RGBImage<Type> &rgbimg); //ok
     template <class Type>
-    LinAlg::Matrix<int> GetPixel(const LinAlg::Matrix<Type> &r,
-                                const LinAlg::Matrix<Type> &g,
-                                const LinAlg::Matrix<Type> &b); //not ok
+    ImageProcessing::RGBImage<Type> Rotation(const ImageProcessing::RGBImage<Type> &rgbimg, const double &angle);
+
 }
 #include "ImageProcessing/rgbimage.hpp"
 #endif // RGBIMAGE_H

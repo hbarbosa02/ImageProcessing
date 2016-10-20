@@ -15,9 +15,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->label->setPixmap(QPixmap::fromImage(ImageProcessing::RGBImage2QImage<int>(rgbimg)));
     ui->label_2->setPixmap(QPixmap::fromImage(ImageProcessing::GrayImage2QImage<int>(grayimg)));
 
-    std::cout << ImageProcessing::GetPixel<int>(50,10,100) << std::endl;
-    std::cout << ImageProcessing::Histogram<int>(grayimg.getGray()) << std::endl;
+//    std::cout << ImageProcessing::HistogramRGB<int>(rgbimg) << std::endl;
 
+//    ImageProcessing::RGBImage<int> t;
+//    t = rgbimg;
+//    ui->label_2->setPixmap(QPixmap::fromImage(ImageProcessing::RGBImage2QImage<int>(t)));
 }
 
 MainWindow::~MainWindow()

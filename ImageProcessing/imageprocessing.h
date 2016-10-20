@@ -28,8 +28,19 @@ namespace ImageProcessing {
                     const LinAlg::Matrix<Type> &b); //ok
 
     template <class Type>
-    int GetPixel(const Type &r,const Type &g, const Type &b); //ok
+    ImageProcessing::RGBImage<Type> QImage2RGBImage(const QImage &img); //ok
+    template <class Type>
+    ImageProcessing::GrayImage<Type> QImage2GrayImage(const QImage &img); //ok
+    template <class Type>
+    ImageProcessing::GrayImage<Type> RGBImage2GrayImage(const ImageProcessing::RGBImage<Type> &rgbimg);
 
+    template <class Type>
+    int GetColorPixel(const Type &r,const Type &g, const Type &b); //ok
+
+    template <class Type>
+    LinAlg::Matrix<int> GetColorPixel(const LinAlg::Matrix<Type> &r,
+                                    const LinAlg::Matrix<Type> &g,
+                                    const LinAlg::Matrix<Type> &b); //not ok
     template <class Type>
     LinAlg::Matrix<Type> Histogram(const LinAlg::Matrix<Type> &img); //ok
 }
