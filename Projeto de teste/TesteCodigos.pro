@@ -126,7 +126,9 @@ HEADERS  += mainwindow.h \
     qcustomplot.h \
     ImageProcessing/rgbimage.h \
     ImageProcessing/imageconversion.h \
-    ImageProcessing/imageconversion.hpp
+    ImageProcessing/imageconversion.hpp \
+    ImageProcessing/imagepreview.h \
+    ImageProcessing/imagepreview.hpp
 
 FORMS    += mainwindow.ui
 

@@ -7,6 +7,7 @@
 
 #include "ImageProcessing/imageprocessing.h"
 #include "ImageProcessing/imageconversion.h"
+#include "ImageProcessing/imagepreview.h"
 
 #include "SistemasdeControle/headers/graphicLibs/plot.h"
 

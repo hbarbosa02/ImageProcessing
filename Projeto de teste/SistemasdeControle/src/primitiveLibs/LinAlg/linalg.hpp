@@ -557,4 +557,3 @@ LinAlg::Matrix<Type> LinAlg::multPointToPoint(const LinAlg::Matrix<Type> &left, 
     }
     return ret;
 }
-
