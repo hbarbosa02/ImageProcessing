@@ -1,121 +1,15 @@
 #include "ImageProcessing/imageprocessing.h"
 
 template <class Type>
-QImage ImageProcessing::RGBImage2QImage(const ImageProcessing::RGBImage<Type> &rgbImg)
-{
-    return ImageProcessing::SetPixel<Type>(rgbImg.getRed(),rgbImg.getGreen(),rgbImg.getBlue());
-}
-
-template <class Type>
-QImage ImageProcessing::GrayImage2QImage(const ImageProcessing::GrayImage<Type> &grayImg)
-{
-    LinAlg::Matrix<Type> gray = grayImg.getGray();
-    return ImageProcessing::SetPixel<Type>(gray,gray,gray);
-}
-
-template <class Type>
-QImage ImageProcessing::Bitmap2QImage(const LinAlg::Matrix<Type> bitmap)
-{
-    return ImageProcessing::SetPixel<Type>(bitmap, bitmap, bitmap);
-}
-
-template <class Type>
-QImage ImageProcessing::RedImage(const ImageProcessing::RGBImage<Type> &rgbImg)
-{
-    LinAlg::Matrix<Type> g = LinAlg::Zeros<Type>(rgbImg.getWidth(), rgbImg.getHeight());
-    LinAlg::Matrix<Type> b = LinAlg::Zeros<Type>(rgbImg.getWidth(), rgbImg.getHeight());
-
-    return ImageProcessing::SetPixel<Type>(rgbImg.getRed(),g,b);
-}
-
-template <class Type>
-QImage ImageProcessing::GreenImage(const ImageProcessing::RGBImage<Type> &rgbImg)
-{
-    LinAlg::Matrix<Type> r = LinAlg::Zeros<Type>(rgbImg.getWidth(), rgbImg.getHeight());
-    LinAlg::Matrix<Type> b = LinAlg::Zeros<Type>(rgbImg.getWidth(), rgbImg.getHeight());
-
-    return ImageProcessing::SetPixel<Type>(r,rgbImg.getGreen(),b);
-}
-
-template <class Type>
-QImage ImageProcessing::BlueImage(const ImageProcessing::RGBImage<Type> &rgbImg)
-{
-    LinAlg::Matrix<Type> r = LinAlg::Zeros<Type>(rgbImg.getWidth(), rgbImg.getHeight());
-    LinAlg::Matrix<Type> g = LinAlg::Zeros<Type>(rgbImg.getWidth(), rgbImg.getHeight());
-
-    return ImageProcessing::SetPixel<Type>(r,g,rgbImg.getBlue());
-}
-
-template <class Type>
-QImage ImageProcessing::SetPixel(const LinAlg::Matrix<Type> &r, const LinAlg::Matrix<Type> &g, const LinAlg::Matrix<Type> &b)
-{
-    QImage ret(r.getNumberOfRows(),r.getNumberOfColumns(),QImage::Format_RGB32);
-
-    for(unsigned i = 0; i < r.getNumberOfRows(); ++i)
-        for(unsigned j = 0; j < r.getNumberOfColumns(); ++j)
-            ret.setPixel(i,j,QColor(r(i+1,j+1),g(i+1,j+1),b(i+1,j+1)).rgb());
-
-    return ret;
-}
-
-template <class Type>
-ImageProcessing::RGBImage<Type> ImageProcessing::QImage2RGBImage(const QImage &img)
-{
-    LinAlg::Matrix<Type> r(img.width(),img.height()), g(img.width(),img.height()), b(img.width(),img.height());
-
-    for(unsigned i = 0; i < img.width(); ++i)
-            for(unsigned j = 0; j < img.height(); ++j){
-                QColor color(img.pixel(i,j));
-                r(i+1,j+1) = color.red();
-                g(i+1,j+1) = color.green();
-                b(i+1,j+1) = color.blue();
-            }
-
-    ImageProcessing::RGBImage<Type> ret(r,g,b);
-
-    return ret;
-}
-
-template <class Type>
-ImageProcessing::GrayImage<Type> ImageProcessing::QImage2GrayImage(const QImage &img)
-{
-    LinAlg::Matrix<Type> gray(img.width(),img.height());
-    for(unsigned i = 0; i < img.width(); ++i)
-            for(unsigned j = 0; j < img.height(); ++j){
-                QColor color(img.pixel(i,j));
-                gray(i+1,j+1) = qGray(color.red(),color.green(),color.blue());
-            }
-
-    ImageProcessing::GrayImage<Type> ret(gray);
-    return ret;
-}
-
-template <class Type>
-ImageProcessing::GrayImage<Type> ImageProcessing::RGBImage2GrayImage(const ImageProcessing::RGBImage<Type> &rgbimg)
-{
-    LinAlg::Matrix<Type> gray(rgbimg.getWidth(), rgbimg.getHeight()),
-                        r = rgbimg.getRed(),
-                        g = rgbimg.getGreen(),
-                        b = rgbimg.getBlue();
-
-    for(unsigned i = 1; i <= gray.getNumberOfRows(); ++i)
-        for(unsigned j = 1; j <= gray.getNumberOfColumns(); ++j)
-            gray(i,j) = qGray(r(i,j),g(i,j),b(i,j));
-
-    ImageProcessing::GrayImage<Type> ret(gray);
-    return ret;
-}
-
-template <class Type>
 int ImageProcessing::GetColorPixel(const Type &r,const Type &g, const Type &b)
 {
     return QColor(r,g,b).value();
 }
 
 template <class Type>
-LinAlg::Matrix<int> ImageProcessing::GetColorPixel(const LinAlg::Matrix<Type> &r, const LinAlg::Matrix<Type> &g, const LinAlg::Matrix<Type> &b)
+LinAlg::Matrix<Type> ImageProcessing::GetColorPixel(const LinAlg::Matrix<Type> &r, const LinAlg::Matrix<Type> &g, const LinAlg::Matrix<Type> &b)
 {
-    LinAlg::Matrix<int> ret(r.getNumberOfRows(),r.getNumberOfColumns());
+    LinAlg::Matrix<Type> ret(r.getNumberOfRows(),r.getNumberOfColumns());
 
     for(unsigned i = 1; i <= r.getNumberOfRows(); ++i)
         for(unsigned j = 1; j <= r.getNumberOfColumns(); ++j)
@@ -127,7 +21,7 @@ LinAlg::Matrix<int> ImageProcessing::GetColorPixel(const LinAlg::Matrix<Type> &r
 template <class Type>
 LinAlg::Matrix<Type> ImageProcessing::Histogram(const LinAlg::Matrix<Type> &img)
 {
-    LinAlg::Matrix<int> ret = LinAlg::Zeros<int>(1,256);
+    LinAlg::Matrix<Type> ret = LinAlg::Zeros<Type>(1,256);
 
     for(unsigned i = 1; i <= img.getNumberOfRows(); ++i)
         for(unsigned j = 1; j <= img.getNumberOfColumns(); ++j)
@@ -139,3 +33,89 @@ LinAlg::Matrix<Type> ImageProcessing::Histogram(const LinAlg::Matrix<Type> &img)
     return ret;
 }
 
+template <typename Type>
+LinAlg::Matrix<Type> ImageProcessing::applyingMask(const LinAlg::Matrix<Type> &mat, const LinAlg::Matrix<Type> &mask)
+{
+    LinAlg::Matrix<Type> ret = LinAlg::Zeros<Type>(mat.getNumberOfRows(),mat.getNumberOfColumns());
+    LinAlg::Matrix<Type> aux;
+
+    unsigned rowSum = (int)mask.getNumberOfRows()/2;
+    unsigned colSum = (int)mask.getNumberOfColumns()/2;
+    unsigned rowLim = ret.getNumberOfRows() - mask.getNumberOfRows() +1;
+    unsigned colLim = ret.getNumberOfColumns() - mask.getNumberOfColumns() +1;
+
+    for(unsigned i = 1; i <= rowLim; ++i){
+        for(unsigned j = 1; j <= colLim; ++j){
+            aux = mat(from(i+mask.getNumberOfRows()-1)-->(i),from(j+mask.getNumberOfColumns()-1)-->(j));
+            ret(i+rowSum,j+colSum) = LinAlg::sum(LinAlg::multPointToPoint(aux,mask));
+        }
+    }
+    return ret;
+}
+
+template<typename Type>
+LinAlg::Matrix<Type> ImageProcessing::bitMap(const LinAlg::Matrix<Type> &mat, const unsigned &limiar)
+{
+    LinAlg::Matrix<Type> ret(mat.getNumberOfRows(), mat.getNumberOfColumns());
+
+    for(unsigned i = 1; i <= ret.getNumberOfRows(); ++i)
+        for(unsigned j = 1; j <= ret.getNumberOfColumns(); ++j)
+        {
+            if(mat(i,j) > limiar)
+                ret(i,j) = 255;
+            else
+                ret(i,j) = 0;
+        }
+    return ret;
+}
+
+template <class Type>
+LinAlg::Matrix<Type> ImageProcessing::Rotation(const LinAlg::Matrix<Type> &mat, const double &angle)
+{
+    LinAlg::Matrix<Type> ret(mat.getNumberOfRows(),mat.getNumberOfColumns());
+    LinAlg::Matrix<double> p1(2,1), p2(2,1), pos;
+    LinAlg::Matrix<double> rot(2,2);
+
+    double ang  = angle * M_PI/180;
+
+    rot(1,1) = cos(ang); rot(1,2) = sin(ang);
+    rot(2,1) = -sin(ang); rot(2,2) = cos(ang);
+
+    p2(1,1) = mat.getNumberOfColumns()/2;
+    p2(2,1) = mat.getNumberOfRows()/2;
+
+    for(unsigned i = 1; i <= ret.getNumberOfRows(); ++i)
+        for(unsigned j = 1; j <= ret.getNumberOfColumns(); ++j){
+            p1(1,1) = i - p2(2,1);
+            p1(2,1) = j - p2(1,1);
+
+            pos = (rot *p1) + p2;
+
+            if(pos(2,1)>0 && pos(2,1) <= mat.getNumberOfColumns() && pos(1,1)>0 && pos(1,1) <= mat.getNumberOfRows())
+                ret(i,j) = mat(Type(pos(1,1)),Type(pos(2,1)));
+        }
+
+    return ret;
+}
+
+template <class Type>
+LinAlg::Matrix<Type> ImageProcessing::Scale(const LinAlg::Matrix<Type> &mat, const double &scale)
+{
+    LinAlg::Matrix<Type> ret;
+
+    if(scale > 1)
+        ret = LinAlg::Zeros<Type>((Type)ceil(mat.getNumberOfRows()*scale),(Type)ceil(mat.getNumberOfColumns()*scale));
+    else
+        ret = LinAlg::Zeros<Type>((Type)floor(mat.getNumberOfRows()*scale),(Type)floor(mat.getNumberOfColumns()*scale));
+
+    for(unsigned i = 1; i <= ret.getNumberOfRows(); ++i)
+        for(unsigned j = 1; j <= ret.getNumberOfColumns(); ++j)
+        {
+            if(scale > 1)
+                ret(i,j) = mat(ceil(i/scale),ceil(j/scale));
+            else
+                ret(i,j) = mat(floor(i/scale),floor(j/scale));
+        }
+
+    return ret;
+}

@@ -89,9 +89,6 @@ namespace LinAlg {
     template <typename Type>
     LinAlg::Matrix<Type> multPointToPoint(const LinAlg::Matrix<Type> &left, const LinAlg::Matrix<Type> &right);
 
-    template <typename Type>
-    LinAlg::Matrix<Type> applyingMask(const LinAlg::Matrix<Type> &mat, const LinAlg::Matrix<Type> &mask);
-
 }
 
 #include "SistemasdeControle/src/primitiveLibs/LinAlg/linalg.hpp"

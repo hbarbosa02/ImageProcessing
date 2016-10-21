@@ -1,15 +1,13 @@
-#ifndef IMAGEPROCESSING_H
-#define IMAGEPROCESSING_H
+#ifndef IMAGECONVERSION_H
+#define IMAGECONVERSION_H
 
 #include "QImage"
 #include "QColor"
-#include "ImageProcessing/rgbimage.h"
 #include "ImageProcessing/grayimage.h"
-#include "SistemasdeControle/headers/primitiveLibs/LinAlg/linalg.h"
-#include "SistemasdeControle/headers/primitiveLibs/LinAlg/matrix.h"
+#include "ImageProcessing/rgbimage.h"
 
-namespace ImageProcessing {
-
+namespace ImageConversion
+{
     template <class Type>
     QImage RGBImage2QImage(const ImageProcessing::RGBImage<Type> &rgbImg); //ok
     template <class Type>
@@ -34,15 +32,7 @@ namespace ImageProcessing {
     template <class Type>
     ImageProcessing::GrayImage<Type> RGBImage2GrayImage(const ImageProcessing::RGBImage<Type> &rgbimg);
 
-    template <class Type>
-    int GetColorPixel(const Type &r,const Type &g, const Type &b); //ok
-
-    template <class Type>
-    LinAlg::Matrix<int> GetColorPixel(const LinAlg::Matrix<Type> &r,
-                                    const LinAlg::Matrix<Type> &g,
-                                    const LinAlg::Matrix<Type> &b); //not ok
-    template <class Type>
-    LinAlg::Matrix<Type> Histogram(const LinAlg::Matrix<Type> &img); //ok
 }
-#include "ImageProcessing/imageprocessing.hpp"
-#endif // IMAGEPROCESSING_H
+#include "ImageProcessing/imageconversion.hpp"
+
+#endif // IMAGECONVERSION_H

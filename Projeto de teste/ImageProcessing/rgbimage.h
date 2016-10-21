@@ -19,7 +19,6 @@ namespace ImageProcessing {
             LinAlg::Matrix<Type> getBlue()  const {return this->blue;}
             LinAlg::Matrix<Type> getRGB()   const {return this->rgb;}
 
-
             unsigned getWidth() const {return this->width;}
             unsigned getHeight()const {return this->height;}
 
@@ -34,7 +33,8 @@ namespace ImageProcessing {
     LinAlg::Matrix<Type> HistogramRGB(const ImageProcessing::RGBImage<Type> &rgbimg); //ok
     template <class Type>
     ImageProcessing::RGBImage<Type> Rotation(const ImageProcessing::RGBImage<Type> &rgbimg, const double &angle);
-
+    template <class Type>
+    ImageProcessing::RGBImage<Type> Scale(const ImageProcessing::RGBImage<Type> &rgbimg, const double &scale);
 }
 #include "ImageProcessing/rgbimage.hpp"
 #endif // RGBIMAGE_H

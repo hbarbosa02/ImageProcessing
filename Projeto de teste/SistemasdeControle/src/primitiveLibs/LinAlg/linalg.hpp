@@ -558,22 +558,3 @@ LinAlg::Matrix<Type> LinAlg::multPointToPoint(const LinAlg::Matrix<Type> &left, 
     return ret;
 }
 
-template <typename Type>
-LinAlg::Matrix<Type> LinAlg::applyingMask(const LinAlg::Matrix<Type> &mat, const LinAlg::Matrix<Type> &mask)
-{
-    LinAlg::Matrix<Type> ret = LinAlg::Zeros<Type>(mat.getNumberOfRows(),mat.getNumberOfColumns());
-    LinAlg::Matrix<Type> aux;
-
-    unsigned rowSum = (int)mask.getNumberOfRows()/2;
-    unsigned colSum = (int)mask.getNumberOfColumns()/2;
-    unsigned rowLim = ret.getNumberOfRows() - mask.getNumberOfRows() +1;
-    unsigned colLim = ret.getNumberOfColumns() - mask.getNumberOfColumns() +1;
-
-    for(unsigned i = 1; i <= rowLim; ++i){
-        for(unsigned j = 1; j <= colLim; ++j){
-            aux = mat(from(i+mask.getNumberOfRows()-1)-->(i),from(j+mask.getNumberOfColumns()-1)-->(j));
-            ret(i+rowSum,j+colSum) = LinAlg::sum(LinAlg::multPointToPoint(aux,mask));
-        }
-    }
-    return ret;
-}

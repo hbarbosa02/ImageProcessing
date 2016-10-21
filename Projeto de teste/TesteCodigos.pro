@@ -4,7 +4,8 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui\
+        printsupport\
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -13,7 +14,8 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    qcustomplot.cpp
 
 HEADERS  += mainwindow.h \
     SistemasdeControle/headers/advancedApplication/datarecognition/classification.h \
@@ -58,7 +60,6 @@ HEADERS  += mainwindow.h \
     SistemasdeControle/headers/restrictedOptimization/polyhedron.h \
     SistemasdeControle/headers/restrictedOptimization/polyhedron.hpp \
     SistemasdeControle/headers/restrictedOptimization/quadprog.h \
-    SistemasdeControle/headers/restrictedOptimization/recursiveactiveset.h \
     SistemasdeControle/headers/restrictedOptimization/simplex.h \
     SistemasdeControle/headers/simulationLibs/sim.h \
     SistemasdeControle/headers/zeroFunctionLib/bisseccao.h \
@@ -112,11 +113,22 @@ HEADERS  += mainwindow.h \
     TesteClasses/rna.h \
     TesteClasses/rna.hpp \
     TesteClasses/rgbimage.h \
-    ImageProcessing/rgbimage.h \
     ImageProcessing/rgbimage.hpp \
     ImageProcessing/imageprocessing.h \
     ImageProcessing/imageprocessing.hpp \
     ImageProcessing/grayimage.h \
-    ImageProcessing/grayimage.hpp
+    ImageProcessing/grayimage.hpp \
+    SistemasdeControle/headers/communicationLibs/opc/OPCClient.h \
+    SistemasdeControle/headers/communicationLibs/opc/opccomn.h \
+    SistemasdeControle/headers/communicationLibs/opc/Opcda.h \
+    SistemasdeControle/headers/communicationLibs/opc/OpcEnum.h \
+    SistemasdeControle/headers/communicationLibs/serial/comunicacao.h \
+    qcustomplot.h \
+    ImageProcessing/rgbimage.h \
+    ImageProcessing/imageconversion.h \
+    ImageProcessing/imageconversion.hpp
 
 FORMS    += mainwindow.ui
+
+DISTFILES += \
+    SistemasdeControle/TestExtra/BUGS EM MATRIX .txt

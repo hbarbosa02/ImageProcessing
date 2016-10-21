@@ -3,8 +3,12 @@
 
 #include <QMainWindow>
 #include <QImage>
+#include "qcustomplot.h"
+
 #include "ImageProcessing/imageprocessing.h"
-#include "ImageProcessing/rgbimage.h"
+#include "ImageProcessing/imageconversion.h"
+
+#include "SistemasdeControle/headers/graphicLibs/plot.h"
 
 namespace Ui {
 class MainWindow;

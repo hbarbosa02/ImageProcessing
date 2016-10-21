@@ -27,7 +27,7 @@ PlotHandler::plot<Type>::plot(unsigned ySubplot, unsigned xSubplot, plotProperti
 template<typename Type>
 PlotHandler::plot<Type>::plot(LinAlg::Matrix<Type> X, QWidget *PlotFrame)
 {
-    LinAlg::Matrix<Type> Y = LinAlg::LineVector<Type>(0,X.getNumberOfColumns()-1);
+    LinAlg::Matrix<Type> Y = LinAlg::LineVector<Type>(0,X.getNumberOfColumns());
     this->properties.setPlotFrame(PlotFrame);
     this->generalPlot(Y,X);
 }
@@ -111,7 +111,8 @@ void PlotHandler::plot<Type>::generalPlot(LinAlg::Matrix<Type> X, LinAlg::Matrix
           if(this->properties.variablesNameFlag)
               customPlot->graph()->setName("Grafico" + QString::number(i+1));
 
-          customPlot->graph()->setLineStyle(QCPGraph::lsLine);
+          customPlot->graph()->setLineStyle(this->properties.lineStyle);
+          customPlot->graph()->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssCircle, 5));
 
           if(this->properties.xLabelFlag)
               customPlot->xAxis->setLabel(this->properties.xLabel.c_str());
@@ -162,7 +163,7 @@ void PlotHandler::plot<Type>::generalPlot(LinAlg::Matrix<Type> X)
       if(this->properties.variablesNameFlag)
           customPlot->graph()->setName("Grafico" + QString::number(i+1));
 
-      customPlot->graph()->setLineStyle(QCPGraph::lsLine);
+      customPlot->graph()->setLineStyle(this->properties.lineStyle);
 
       if(this->properties.xLabelFlag)
           customPlot->xAxis->setLabel(this->properties.xLabel.c_str());

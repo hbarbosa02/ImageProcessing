@@ -11,6 +11,7 @@ namespace PlotHandler {
     struct plotProperties{
 
         QWidget *PlotFrame;
+        QCPGraph::LineStyle lineStyle;
         std::string xLabel, yLabel, *variablesName, font, title;
         unsigned rows, columns, windowSizeX, windowSizeY, windowPosX, windowPosY;
         bool xLabelFlag, yLabelFlag, variablesNameFlag, fontFlag, titleFlag, windowFlag, sizeWindowwindowFlag;
@@ -32,6 +33,7 @@ namespace PlotHandler {
             this->windowSizeY          = 300;
             this->variablesNameFlag    = 0;
             this->sizeWindowwindowFlag = 1;
+            this->lineStyle            = QCPGraph::lsLine;
         }
 
         void setPlotSize(unsigned posX, unsigned posY, unsigned sizeX, unsigned sizeY)
@@ -83,6 +85,10 @@ namespace PlotHandler {
         {
             this->windowFlag = 1;
             this->PlotFrame = Frame;
+        }
+
+        void setLineStyle(QCPGraph::LineStyle lineStyle){
+            this->lineStyle = lineStyle;
         }
     };
 

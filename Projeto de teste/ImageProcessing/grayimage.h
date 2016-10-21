@@ -1,8 +1,8 @@
 #ifndef GRAYIMAGE_H
 #define GRAYIMAGE_H
 
-#include "ImageProcessing/imageprocessing.h"
 #include "SistemasdeControle/headers/primitiveLibs/LinAlg/matrix.h"
+#include "ImageProcessing/imageprocessing.h"
 
 namespace ImageProcessing {
     template <class Type>
@@ -29,6 +29,8 @@ namespace ImageProcessing {
     LinAlg::Matrix<Type> HistogramGray(const ImageProcessing::GrayImage<Type> &grayimg); //ok
     template <class Type>
     ImageProcessing::GrayImage<Type> Rotation(const ImageProcessing::GrayImage<Type> &grayimg, const double &angle);
+    template <class Type>
+    ImageProcessing::GrayImage<Type> Scale(const ImageProcessing::GrayImage<Type> &grayimg, const double &scale);
 }
 #include "ImageProcessing/grayimage.hpp"
 #endif // GRAYIMAGE_H
