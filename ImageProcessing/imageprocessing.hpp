@@ -1,12 +1,12 @@
 #include "ImageProcessing/imageprocessing.h"
 
-template <class Type>
+template <typename Type>
 int ImageProcessing::GetColorPixel(const Type &r,const Type &g, const Type &b)
 {
     return QColor(r,g,b).value();
 }
 
-template <class Type>
+template <typename Type>
 LinAlg::Matrix<Type> ImageProcessing::checkValue(const LinAlg::Matrix<Type> &mat)
 {
     LinAlg::Matrix<Type> ret(mat.getNumberOfRows(),mat.getNumberOfColumns());
@@ -25,7 +25,7 @@ LinAlg::Matrix<Type> ImageProcessing::checkValue(const LinAlg::Matrix<Type> &mat
     return ret;
 }
 
-template <class Type>
+template <typename Type>
 LinAlg::Matrix<Type> ImageProcessing::GetColorPixel(const LinAlg::Matrix<Type> &r, const LinAlg::Matrix<Type> &g, const LinAlg::Matrix<Type> &b)
 {
     LinAlg::Matrix<Type> ret(r.getNumberOfRows(),r.getNumberOfColumns());
@@ -37,7 +37,7 @@ LinAlg::Matrix<Type> ImageProcessing::GetColorPixel(const LinAlg::Matrix<Type> &
     return ret;
 }
 
-template <class Type>
+template <typename Type>
 LinAlg::Matrix<Type> ImageProcessing::Histogram(const LinAlg::Matrix<Type> &img)
 {
     LinAlg::Matrix<Type> ret = LinAlg::Zeros<Type>(1,256);
@@ -52,7 +52,7 @@ LinAlg::Matrix<Type> ImageProcessing::Histogram(const LinAlg::Matrix<Type> &img)
     return ret;
 }
 
-template <class Type>
+template <typename Type>
 LinAlg::Matrix<Type> ImageProcessing::ApplyingMask(const LinAlg::Matrix<Type> &mat, const LinAlg::Matrix<Type> &mask)
 {
     LinAlg::Matrix<Type> ret = LinAlg::Zeros<Type>(mat.getNumberOfRows(),mat.getNumberOfColumns());
@@ -72,7 +72,7 @@ LinAlg::Matrix<Type> ImageProcessing::ApplyingMask(const LinAlg::Matrix<Type> &m
     return ret;
 }
 
-template<class Type>
+template<typename Type>
 LinAlg::Matrix<Type> ImageProcessing::BitMap(const LinAlg::Matrix<Type> &mat, const unsigned &limiar)
 {
     LinAlg::Matrix<Type> ret(mat.getNumberOfRows(), mat.getNumberOfColumns());
@@ -88,7 +88,7 @@ LinAlg::Matrix<Type> ImageProcessing::BitMap(const LinAlg::Matrix<Type> &mat, co
     return ret;
 }
 
-template<class Type>
+template<typename Type>
 LinAlg::Matrix<Type> ImageProcessing::Negative(const LinAlg::Matrix<Type> &mat)
 {
     LinAlg::Matrix<Type> ret(mat.getNumberOfRows(), mat.getNumberOfColumns());
@@ -99,7 +99,7 @@ LinAlg::Matrix<Type> ImageProcessing::Negative(const LinAlg::Matrix<Type> &mat)
     return ret;
 }
 
-template <class Type>
+template <typename Type>
 LinAlg::Matrix<Type> ImageProcessing::Rotation(const LinAlg::Matrix<Type> &mat, const double &angle)
 {
     LinAlg::Matrix<Type> ret(mat.getNumberOfRows(),mat.getNumberOfColumns());
@@ -128,7 +128,7 @@ LinAlg::Matrix<Type> ImageProcessing::Rotation(const LinAlg::Matrix<Type> &mat, 
     return ret;
 }
 
-template <class Type>
+template <typename Type>
 LinAlg::Matrix<Type> ImageProcessing::Scale(const LinAlg::Matrix<Type> &mat, const double &scale)
 {
     LinAlg::Matrix<Type> ret;
@@ -150,7 +150,7 @@ LinAlg::Matrix<Type> ImageProcessing::Scale(const LinAlg::Matrix<Type> &mat, con
     return ret;
 }
 
-template <class Type>
+template <typename Type>
 LinAlg::Matrix<Type> ImageProcessing::ReflectLtoR(const LinAlg::Matrix<Type> &mat)
 {
     LinAlg::Matrix<Type> ret(mat.getNumberOfRows(), mat.getNumberOfColumns());
@@ -162,7 +162,7 @@ LinAlg::Matrix<Type> ImageProcessing::ReflectLtoR(const LinAlg::Matrix<Type> &ma
     return ret;
 }
 
-template <class Type>
+template <typename Type>
 LinAlg::Matrix<Type> ImageProcessing::ReflectUtoD(const LinAlg::Matrix<Type> &mat)
 {
     LinAlg::Matrix<Type> ret(mat.getNumberOfRows(), mat.getNumberOfColumns());
@@ -172,4 +172,73 @@ LinAlg::Matrix<Type> ImageProcessing::ReflectUtoD(const LinAlg::Matrix<Type> &ma
             ret(i,j) = mat(ret.getNumberOfRows()-i+1,j);
 
     return ret;
+}
+
+template <typename Type>
+LinAlg::Matrix<Type> ImageProcessing::MediaFilter(const LinAlg::Matrix<Type> &mat, const int &sizeMask)
+{
+    if(sizeMask % 2 == 0){
+        std::cout << "sizeMask deve ser impar" << std::endl;
+        return mat;
+    } else{
+        LinAlg::Matrix<Type> ret = mat;
+        LinAlg::Matrix<Type> aux;
+        int n = sizeMask / 2;
+        Type temp = 0;
+
+        for(unsigned i = 1+n; i <= ret.getNumberOfRows()-n; ++i)
+            for(unsigned j = 1+n; j <= ret.getNumberOfColumns()-n; ++j){
+                aux = mat(from(i-n)-->(i+n),from(j-n)-->(j+n));
+                temp = LinAlg::sum(aux)/(sizeMask*sizeMask);
+                ret(i,j) = temp;
+            }
+        return ret;
+    }
+}
+
+template <typename Type>
+LinAlg::Matrix<Type> ImageProcessing::MedianFilter(const LinAlg::Matrix<Type> &mat, const int &sizeMask)
+{
+    LinAlg::Matrix<Type> ret = mat;
+    LinAlg::Matrix<Type> aux;
+    int n = sizeMask / 2, g = (sizeMask*sizeMask)/2;
+
+    Type temp = 0;
+
+    for(unsigned i = 1+n; i <= ret.getNumberOfRows()-n; ++i)
+        for(unsigned j = 1+n; j <= ret.getNumberOfColumns()-n; ++j){
+            aux = mat(from(i-n)-->(i+n),from(j-n)-->(j+n));
+            aux = LinAlg::selectionSort<Type>(aux);
+            if(sizeMask % 2 == 0)
+                temp = (aux(1,g) + aux(1,g+1))/2;
+            else
+                temp = aux(1,g);
+
+            ret(i,j) = temp;
+        }
+    return ret;
+}
+
+template <typename Type>
+LinAlg::Matrix<Type> ImageProcessing::SelfReinforcementFilter(const LinAlg::Matrix<Type> &mat, const int &sizeMask, const double &a)
+{
+    if(sizeMask % 2 == 0){
+        std::cout << "sizeMask deve ser impar" << std::endl;
+        return mat;
+    } else{
+        LinAlg::Matrix<Type> ret = mat;
+        LinAlg::Matrix<Type> aux, filtro;
+        filtro = LinAlg::Ones<Type>(sizeMask,sizeMask);
+        int n = sizeMask / 2;
+        Type temp = 0;
+
+        for(unsigned i = 1+n; i <= ret.getNumberOfRows()-n; ++i)
+            for(unsigned j = 1+n; j <= ret.getNumberOfColumns()-n; ++j){
+                aux = mat(from(i-n)-->(i+n),from(j-n)-->(j+n));
+                temp = LinAlg::sum<Type>(LinAlg::multPointToPoint<Type>(aux,filtro));
+                ret(i,j) = temp;
+            }
+        ret = LinAlg::abs<Type>(a*mat-ret);
+        return ImageProcessing::checkValue<Type>(ret);
+    }
 }

@@ -23,8 +23,11 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+private slots:
+
 private:
     Ui::MainWindow *ui;
+    QImage img, img2;
 };
 
 #endif // MAINWINDOW_H

@@ -6,24 +6,20 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    QImage img, img2;
-    img.load("F:/Unp/8ªSemestre/Visão Computacional/Nova pasta/toycars1.png","PNG");
-    img2.load("F:/Unp/8ªSemestre/Visão Computacional/Nova pasta/toycars2.png","PNG");
-    ImageProcessing::RGBImage<int> rgbimg = ImageConversion::QImage2RGBImage<int>(img);
+    img.load("F:/Unp/8ªSemestre/Visão Computacional/Nova pasta/point.tif","TIF");
+    img2.load("F:/Unp/8ªSemestre/Visão Computacional/Nova pasta/PlacaRuido.tif","TIF");
+//    ImageProcessing::RGBImage<int> rgbimg = ImageConversion::QImage2RGBImage<int>(img);
 
     ImageProcessing::GrayImage<int> grayimg = ImageConversion::QImage2GrayImage<int>(img);
     ImageProcessing::GrayImage<int> grayimg2 = ImageConversion::QImage2GrayImage<int>(img2);
-    ImageProcessing::GrayImage<int> aux ;
+    ImageProcessing::GrayImage<int> aux = grayimg + 50;
 
-    aux = grayimg - grayimg2;
-
-    ui->label->setPixmap(QPixmap::fromImage(ImageConversion::GrayImage2QImage<int>(grayimg)));
-    ui->label_2->setPixmap(QPixmap::fromImage(ImageConversion::GrayImage2QImage<int>(grayimg2)));
-    ui->label_3->setPixmap(QPixmap::fromImage(ImageConversion::GrayImage2QImage<int>(aux)));
-
+    ImagePreview::imShow<int>(ImageProcessing::MediaFilter<int>(grayimg2,3),ui->label);
+    ImagePreview::imShow<int>(ImageProcessing::MedianFilter<int>(grayimg2,5),ui->label_2);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
+

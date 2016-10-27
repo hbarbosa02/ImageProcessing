@@ -92,6 +92,8 @@ namespace LinAlg {
     template <typename Type>
     LinAlg::Matrix<Type> divPointToPoint(const LinAlg::Matrix<Type> &left, const LinAlg::Matrix<Type> &right);
 
+    template <typename Type>
+    LinAlg::Matrix<Type> selectionSort(const LinAlg::Matrix<Type> &vector);
 }
 
 #include "SistemasdeControle/src/primitiveLibs/LinAlg/linalg.hpp"

@@ -1,25 +1,25 @@
 #include "ImageProcessing/imageconversion.h"
 
-template <class Type>
+template <typename Type>
 QImage ImageConversion::RGBImage2QImage(const ImageProcessing::RGBImage<Type> &rgbImg)
 {
     return ImageConversion::SetPixel<Type>(rgbImg.getRed(),rgbImg.getGreen(),rgbImg.getBlue());
 }
 
-template <class Type>
+template <typename Type>
 QImage ImageConversion::GrayImage2QImage(const ImageProcessing::GrayImage<Type> &grayImg)
 {
     LinAlg::Matrix<Type> gray = grayImg.getGray();
     return ImageConversion::SetPixel<Type>(gray,gray,gray);
 }
 
-template <class Type>
+template <typename Type>
 QImage ImageConversion::Bitmap2QImage(const LinAlg::Matrix<Type> bitmap)
 {
     return ImageConversion::SetPixel<Type>(bitmap, bitmap, bitmap);
 }
 
-template <class Type>
+template <typename Type>
 QImage ImageConversion::RedImage(const ImageProcessing::RGBImage<Type> &rgbImg)
 {
     LinAlg::Matrix<Type> g = LinAlg::Zeros<Type>(rgbImg.getWidth(), rgbImg.getHeight());
@@ -28,7 +28,7 @@ QImage ImageConversion::RedImage(const ImageProcessing::RGBImage<Type> &rgbImg)
     return ImageConversion::SetPixel<Type>(rgbImg.getRed(),g,b);
 }
 
-template <class Type>
+template <typename Type>
 QImage ImageConversion::GreenImage(const ImageProcessing::RGBImage<Type> &rgbImg)
 {
     LinAlg::Matrix<Type> r = LinAlg::Zeros<Type>(rgbImg.getWidth(), rgbImg.getHeight());
@@ -37,7 +37,7 @@ QImage ImageConversion::GreenImage(const ImageProcessing::RGBImage<Type> &rgbImg
     return ImageConversion::SetPixel<Type>(r,rgbImg.getGreen(),b);
 }
 
-template <class Type>
+template <typename Type>
 QImage ImageConversion::BlueImage(const ImageProcessing::RGBImage<Type> &rgbImg)
 {
     LinAlg::Matrix<Type> r = LinAlg::Zeros<Type>(rgbImg.getWidth(), rgbImg.getHeight());
@@ -46,7 +46,7 @@ QImage ImageConversion::BlueImage(const ImageProcessing::RGBImage<Type> &rgbImg)
     return ImageConversion::SetPixel<Type>(r,g,rgbImg.getBlue());
 }
 
-template <class Type>
+template <typename Type>
 QImage ImageConversion::SetPixel(const LinAlg::Matrix<Type> &r, const LinAlg::Matrix<Type> &g, const LinAlg::Matrix<Type> &b)
 {
     QImage ret(r.getNumberOfRows(),r.getNumberOfColumns(),QImage::Format_RGB32);
@@ -58,7 +58,7 @@ QImage ImageConversion::SetPixel(const LinAlg::Matrix<Type> &r, const LinAlg::Ma
     return ret;
 }
 
-template <class Type>
+template <typename Type>
 ImageProcessing::RGBImage<Type> ImageConversion::QImage2RGBImage(const QImage &img)
 {
     LinAlg::Matrix<Type> r(img.width(),img.height()), g(img.width(),img.height()), b(img.width(),img.height());
@@ -76,7 +76,7 @@ ImageProcessing::RGBImage<Type> ImageConversion::QImage2RGBImage(const QImage &i
     return ret;
 }
 
-template <class Type>
+template <typename Type>
 ImageProcessing::GrayImage<Type> ImageConversion::QImage2GrayImage(const QImage &img)
 {
     LinAlg::Matrix<Type> gray(img.width(),img.height());
@@ -90,7 +90,7 @@ ImageProcessing::GrayImage<Type> ImageConversion::QImage2GrayImage(const QImage 
     return ret;
 }
 
-template <class Type>
+template <typename Type>
 ImageProcessing::GrayImage<Type> ImageConversion::RGBImage2GrayImage(const ImageProcessing::RGBImage<Type> &rgbimg)
 {
     LinAlg::Matrix<Type> gray(rgbimg.getWidth(), rgbimg.getHeight()),

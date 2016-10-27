@@ -557,3 +557,33 @@ LinAlg::Matrix<Type> LinAlg::multPointToPoint(const LinAlg::Matrix<Type> &left, 
     }
     return ret;
 }
+
+template <typename Type>
+LinAlg::Matrix<Type> LinAlg::selectionSort(const LinAlg::Matrix<Type> &vector)
+{
+    unsigned min, size = vector.getNumberOfColumns()*vector.getNumberOfRows();
+    Type swap = 0;
+    LinAlg::Matrix<Type> aux;
+
+    if(vector.getNumberOfRows() > 1)
+    {
+        for(unsigned i = 1; i <= vector.getNumberOfRows(); ++i)
+            aux = aux | vector.GetRow(i);
+    }else{
+        aux = vector;
+    }
+
+    for(unsigned i = 1; i <= size; ++i){
+        min = i;
+        for(unsigned j = (i+1); j <= size; j++){
+            if(aux(1,j) < aux(1,min))
+                min = j;
+        }
+        if(i != min){
+            swap = aux(1,i);
+            aux(1,i) = aux(1,min);
+            aux(1,min) = swap;
+        }
+    }
+    return aux;
+}
