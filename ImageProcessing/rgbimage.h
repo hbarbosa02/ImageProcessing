@@ -5,7 +5,8 @@
 #include "SistemasdeControle/headers/primitiveLibs/LinAlg/linalg.h"
 #include "SistemasdeControle/headers/primitiveLibs/LinAlg/matrix.h"
 
-namespace ImageProcessing {
+namespace ImageProcessing
+{
     template <class Type>
     class RGBImage
     {
@@ -23,6 +24,8 @@ namespace ImageProcessing {
             unsigned getHeight()const {return this->height;}
 
             ImageProcessing::RGBImage<Type>& operator =(const ImageProcessing::RGBImage<Type>& rgbImg);
+//            template<typename RightType>
+//            ImageProcessing::RGBImage<Type>& operator= (const ImageProcessing::RGBImage<RightType>& rgbImg);
 
             ImageProcessing::RGBImage<Type>& operator+= (const ImageProcessing::RGBImage<Type>& rgbImg);
             ImageProcessing::RGBImage<Type>& operator+= (const Type& value);
@@ -100,15 +103,15 @@ namespace ImageProcessing {
     ImageProcessing::RGBImage<Type> operator ^(const OtherType& lhs,ImageProcessing::RGBImage<Type> rhs){return rhs ^= lhs;}
 
     template <typename Type>
-    LinAlg::Matrix<Type> HistogramRGB(const ImageProcessing::RGBImage<Type> &rgbimg); //ok
+    LinAlg::Matrix<Type> Histogram(const ImageProcessing::RGBImage<Type> &rgbimg); //ok
     template <typename Type>
     ImageProcessing::RGBImage<Type> Rotation(const ImageProcessing::RGBImage<Type> &rgbimg, const double &angle);
     template <typename Type>
     ImageProcessing::RGBImage<Type> Scale(const ImageProcessing::RGBImage<Type> &rgbimg, const double &scale);
     template <typename Type>
-    ImageProcessing::RGBImage<Type> ReflectLtoR(const ImageProcessing::RGBImage<Type> &rgbimg);
+    ImageProcessing::RGBImage<Type> Reflect(const ImageProcessing::RGBImage<Type> &rgbimg, bool flag = false);
     template <typename Type>
-    ImageProcessing::RGBImage<Type> ReflectUtoD(const ImageProcessing::RGBImage<Type> &rgbimg);
+    ImageProcessing::RGBImage<Type> ColorInversion(const ImageProcessing::RGBImage<Type> &rgbimg);
 
     template <typename Type>
     ImageProcessing::RGBImage<Type> MediaFilter(const ImageProcessing::RGBImage<Type> &rgbimg, const int &sizeMask);

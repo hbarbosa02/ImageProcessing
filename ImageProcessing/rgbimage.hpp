@@ -9,9 +9,9 @@ ImageProcessing::RGBImage<Type>::~RGBImage()
 template <typename Type>
 ImageProcessing::RGBImage<Type>::RGBImage(const LinAlg::Matrix<Type> &r, const LinAlg::Matrix<Type> &g, const LinAlg::Matrix<Type> &b)
 {
-    this->red = r;
-    this->green = g;
-    this->blue = b;
+    this->red = ImageProcessing::checkValue<Type>(r);
+    this->green = ImageProcessing::checkValue<Type>(g);
+    this->blue = ImageProcessing::checkValue<Type>(b);
     //this->rgb = ImageProcessing::GetPixel<Type>(r,g,b);
 
     this->width = r.getNumberOfRows();
@@ -33,6 +33,21 @@ ImageProcessing::RGBImage<Type>& ImageProcessing::RGBImage<Type>::operator =(con
 
     return *this;
 }
+
+//template<typename RightType> template <typename Type>
+//ImageProcessing::RGBImage<Type>& ImageProcessing::RGBImage<Type>::operator =(const ImageProcessing::RGBImage<RightType>& rgbImg)
+//{
+//    this->width = rgbImg.getWidth();
+//    this->height = rgbImg.getHeight();
+
+//    this->red = rgbImg.getRed();
+//    this->green = rgbImg.getGreen();
+//    this->blue = rgbImg.getBlue();
+
+//    this->a = 255;
+
+//    return *this;
+//}
 
 template <typename Type>
 ImageProcessing::RGBImage<Type>& ImageProcessing::RGBImage<Type>::operator +=(const Type& value)
@@ -228,7 +243,7 @@ ImageProcessing::RGBImage<Type>& ImageProcessing::RGBImage<Type>::operator ^=(co
 }
 
 template <typename Type>
-LinAlg::Matrix<Type> ImageProcessing::HistogramRGB(const ImageProcessing::RGBImage<Type> &rgbimg)
+LinAlg::Matrix<Type> ImageProcessing::Histogram(const ImageProcessing::RGBImage<Type> &rgbimg)
 {
     LinAlg::Matrix<Type> r = ImageProcessing::Histogram<Type>(rgbimg.getRed()),
                          g = ImageProcessing::Histogram<Type>(rgbimg.getGreen()),
@@ -260,22 +275,22 @@ ImageProcessing::RGBImage<Type> ImageProcessing::Scale(const ImageProcessing::RG
 }
 
 template <typename Type>
-ImageProcessing::RGBImage<Type> ImageProcessing::ReflectLtoR(const ImageProcessing::RGBImage<Type> &rgbimg)
+ImageProcessing::RGBImage<Type> ImageProcessing::Reflect(const ImageProcessing::RGBImage<Type> &rgbimg, const bool &flag = 0)
 {
-    LinAlg::Matrix<Type> r = ImageProcessing::ReflectLtoR<Type>(rgbimg.getRed()),
-                         g = ImageProcessing::ReflectLtoR<Type>(rgbimg.getGreen()),
-                         b = ImageProcessing::ReflectLtoR<Type>(rgbimg.getBlue());
+    LinAlg::Matrix<Type> r = ImageProcessing::Reflect<Type>(rgbimg.getRed(),flag),
+                         g = ImageProcessing::Reflect<Type>(rgbimg.getGreen(),flag),
+                         b = ImageProcessing::Reflect<Type>(rgbimg.getBlue(),flag);
 
     ImageProcessing::RGBImage<Type> ret(r,g,b);
     return ret;
 }
 
 template <typename Type>
-ImageProcessing::RGBImage<Type> ImageProcessing::ReflectUtoD(const ImageProcessing::RGBImage<Type> &rgbimg)
+ImageProcessing::RGBImage<Type> ImageProcessing::ColorInversion(const ImageProcessing::RGBImage<Type> &rgbimg)
 {
-    LinAlg::Matrix<Type> r = ImageProcessing::ReflectUtoD<Type>(rgbimg.getRed()),
-                         g = ImageProcessing::ReflectUtoD<Type>(rgbimg.getGreen()),
-                         b = ImageProcessing::ReflectUtoD<Type>(rgbimg.getBlue());
+    LinAlg::Matrix<Type> r = ImageProcessing::ColorInversion<Type>(rgbimg.getRed()),
+                         g = ImageProcessing::ColorInversion<Type>(rgbimg.getGreen()),
+                         b = ImageProcessing::ColorInversion<Type>(rgbimg.getBlue());
 
     ImageProcessing::RGBImage<Type> ret(r,g,b);
     return ret;

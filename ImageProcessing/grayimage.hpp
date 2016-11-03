@@ -9,7 +9,7 @@ ImageProcessing::GrayImage<Type>::~GrayImage()
 template <typename Type>
 ImageProcessing::GrayImage<Type>::GrayImage(const LinAlg::Matrix<Type> &gray)
 {
-    this->gray = gray;
+    this->gray = ImageProcessing::checkValue<Type>(gray);
 
     this->width = gray.getNumberOfRows();
     this->height = gray.getNumberOfColumns();
@@ -152,7 +152,7 @@ template <typename Type>
 ImageProcessing::GrayImage<Type> ImageProcessing::operator <=(ImageProcessing::GrayImage<Type> lhs, const Type& value)
 {
     LinAlg::Matrix<Type> aux = ImageProcessing::BitMap(lhs.getGray(),value);
-    LinAlg::Matrix<Type> aux1 = ImageProcessing::Negative<Type>(aux);
+    LinAlg::Matrix<Type> aux1 = ImageProcessing::ColorInversion<Type>(aux);
     ImageProcessing::GrayImage<Type> ret(aux1);
     return ret;
 }
@@ -166,7 +166,7 @@ ImageProcessing::GrayImage<Type> ImageProcessing::operator >=(ImageProcessing::G
 }
 
 template <typename Type>
-LinAlg::Matrix<Type> ImageProcessing::HistogramGray(const ImageProcessing::GrayImage<Type> &grayimg)
+LinAlg::Matrix<Type> ImageProcessing::Histogram(const ImageProcessing::GrayImage<Type> &grayimg)
 {
     return ImageProcessing::Histogram<Type>(grayimg.getGray());
 }
@@ -186,16 +186,24 @@ ImageProcessing::GrayImage<Type> ImageProcessing::Scale(const ImageProcessing::G
 }
 
 template <typename Type>
-ImageProcessing::GrayImage<Type> ImageProcessing::ReflectLtoR(const ImageProcessing::GrayImage<Type> &grayimg)
+ImageProcessing::GrayImage<Type> ImageProcessing::Reflect(const ImageProcessing::GrayImage<Type> &grayimg, bool flag)
 {
-    ImageProcessing::GrayImage<Type> ret(ImageProcessing::ReflectLtoR(grayimg.getGray()));
+    ImageProcessing::GrayImage<Type> ret(ImageProcessing::Reflect<Type>(grayimg.getGray(),flag));
     return ret;
 }
 
 template <typename Type>
-ImageProcessing::GrayImage<Type> ImageProcessing::ReflectUtoD(const ImageProcessing::GrayImage<Type> &grayimg)
+ImageProcessing::GrayImage<Type> ImageProcessing::ColorInversion(const ImageProcessing::GrayImage<Type> &grayimg)
 {
-    ImageProcessing::GrayImage<Type> ret(ImageProcessing::ReflectUtoD(grayimg.getGray()));
+    ImageProcessing::GrayImage<Type> ret(ImageProcessing::ColorInversion<Type>(grayimg.getGray()));
+    return ret;
+}
+
+template <typename Type>
+ImageProcessing::GrayImage<Type> ImageProcessing::BitMap(const ImageProcessing::GrayImage<Type> &grayimg, const double &limiar)
+{
+    LinAlg::Matrix<Type> aux = ImageProcessing::BitMap(grayimg.getGray(),limiar);
+    ImageProcessing::GrayImage<Type> ret(aux);
     return ret;
 }
 

@@ -6,16 +6,21 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    img.load("F:/Unp/8ªSemestre/Visão Computacional/Nova pasta/point.tif","TIF");
-    img2.load("F:/Unp/8ªSemestre/Visão Computacional/Nova pasta/PlacaRuido.tif","TIF");
-//    ImageProcessing::RGBImage<int> rgbimg = ImageConversion::QImage2RGBImage<int>(img);
+    img.load("F:/Unp/8ªSemestre/Visão Computacional/Nova pasta/Flor.bmp","BMP");
+    img2.load("F:/Unp/8ªSemestre/Visão Computacional/Nova pasta/Flor.bmp","BMP");
 
-    ImageProcessing::GrayImage<int> grayimg = ImageConversion::QImage2GrayImage<int>(img);
-    ImageProcessing::GrayImage<int> grayimg2 = ImageConversion::QImage2GrayImage<int>(img2);
-    ImageProcessing::GrayImage<int> aux = grayimg + 50;
+    ImageProcessing::RGBImage<int> rgbimg = ImageProcessing::QImage2RGBImage<int>(img);
 
-    ImagePreview::imShow<int>(ImageProcessing::MediaFilter<int>(grayimg2,3),ui->label);
-    ImagePreview::imShow<int>(ImageProcessing::MedianFilter<int>(grayimg2,5),ui->label_2);
+    ImageProcessing::GrayImage<int> grayimg = ImageProcessing::QImage2GrayImage<int>(img);
+    ImageProcessing::GrayImage<int> grayimg2 = ImageProcessing::QImage2GrayImage<int>(img2);
+    ImageProcessing::RGBImage<int> aux;
+    aux = ImageProcessing::ColorInversion<int>(rgbimg);
+
+    ImageProcessing::imShow<int>(rgbimg,ui->label);
+    ImageProcessing::imShow<int>(aux,ui->label_2);
+
+    ImageProcessing::plot<int>(ImageProcessing::Histogram<int>(grayimg),ui->widget_3);
+//    ImageProcessing::bar<int>(ImageProcessing::Histogram<int>(aux),ui->widget_4);
 }
 
 MainWindow::~MainWindow()

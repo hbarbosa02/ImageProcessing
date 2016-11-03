@@ -6,7 +6,7 @@
 #include "ImageProcessing/grayimage.h"
 #include "ImageProcessing/rgbimage.h"
 
-namespace ImageConversion
+namespace ImageProcessing
 {
     template <typename Type>
     QImage RGBImage2QImage(const ImageProcessing::RGBImage<Type> &rgbImg); //ok

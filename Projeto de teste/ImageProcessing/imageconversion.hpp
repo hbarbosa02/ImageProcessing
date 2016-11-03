@@ -1,53 +1,53 @@
-#include "ImageProcessing/imageconversion.h"
+#include "ImageProcessing/ImageProcessing.h"
 
 template <typename Type>
-QImage ImageConversion::RGBImage2QImage(const ImageProcessing::RGBImage<Type> &rgbImg)
+QImage ImageProcessing::RGBImage2QImage(const ImageProcessing::RGBImage<Type> &rgbImg)
 {
-    return ImageConversion::SetPixel<Type>(rgbImg.getRed(),rgbImg.getGreen(),rgbImg.getBlue());
+    return ImageProcessing::SetPixel<Type>(rgbImg.getRed(),rgbImg.getGreen(),rgbImg.getBlue());
 }
 
 template <typename Type>
-QImage ImageConversion::GrayImage2QImage(const ImageProcessing::GrayImage<Type> &grayImg)
+QImage ImageProcessing::GrayImage2QImage(const ImageProcessing::GrayImage<Type> &grayImg)
 {
     LinAlg::Matrix<Type> gray = grayImg.getGray();
-    return ImageConversion::SetPixel<Type>(gray,gray,gray);
+    return ImageProcessing::SetPixel<Type>(gray,gray,gray);
 }
 
 template <typename Type>
-QImage ImageConversion::Bitmap2QImage(const LinAlg::Matrix<Type> bitmap)
+QImage ImageProcessing::Bitmap2QImage(const LinAlg::Matrix<Type> bitmap)
 {
-    return ImageConversion::SetPixel<Type>(bitmap, bitmap, bitmap);
+    return ImageProcessing::SetPixel<Type>(bitmap, bitmap, bitmap);
 }
 
 template <typename Type>
-QImage ImageConversion::RedImage(const ImageProcessing::RGBImage<Type> &rgbImg)
+QImage ImageProcessing::RedImage(const ImageProcessing::RGBImage<Type> &rgbImg)
 {
     LinAlg::Matrix<Type> g = LinAlg::Zeros<Type>(rgbImg.getWidth(), rgbImg.getHeight());
     LinAlg::Matrix<Type> b = LinAlg::Zeros<Type>(rgbImg.getWidth(), rgbImg.getHeight());
 
-    return ImageConversion::SetPixel<Type>(rgbImg.getRed(),g,b);
+    return ImageProcessing::SetPixel<Type>(rgbImg.getRed(),g,b);
 }
 
 template <typename Type>
-QImage ImageConversion::GreenImage(const ImageProcessing::RGBImage<Type> &rgbImg)
+QImage ImageProcessing::GreenImage(const ImageProcessing::RGBImage<Type> &rgbImg)
 {
     LinAlg::Matrix<Type> r = LinAlg::Zeros<Type>(rgbImg.getWidth(), rgbImg.getHeight());
     LinAlg::Matrix<Type> b = LinAlg::Zeros<Type>(rgbImg.getWidth(), rgbImg.getHeight());
 
-    return ImageConversion::SetPixel<Type>(r,rgbImg.getGreen(),b);
+    return ImageProcessing::SetPixel<Type>(r,rgbImg.getGreen(),b);
 }
 
 template <typename Type>
-QImage ImageConversion::BlueImage(const ImageProcessing::RGBImage<Type> &rgbImg)
+QImage ImageProcessing::BlueImage(const ImageProcessing::RGBImage<Type> &rgbImg)
 {
     LinAlg::Matrix<Type> r = LinAlg::Zeros<Type>(rgbImg.getWidth(), rgbImg.getHeight());
     LinAlg::Matrix<Type> g = LinAlg::Zeros<Type>(rgbImg.getWidth(), rgbImg.getHeight());
 
-    return ImageConversion::SetPixel<Type>(r,g,rgbImg.getBlue());
+    return ImageProcessing::SetPixel<Type>(r,g,rgbImg.getBlue());
 }
 
 template <typename Type>
-QImage ImageConversion::SetPixel(const LinAlg::Matrix<Type> &r, const LinAlg::Matrix<Type> &g, const LinAlg::Matrix<Type> &b)
+QImage ImageProcessing::SetPixel(const LinAlg::Matrix<Type> &r, const LinAlg::Matrix<Type> &g, const LinAlg::Matrix<Type> &b)
 {
     QImage ret(r.getNumberOfRows(),r.getNumberOfColumns(),QImage::Format_RGB32);
 
@@ -59,7 +59,7 @@ QImage ImageConversion::SetPixel(const LinAlg::Matrix<Type> &r, const LinAlg::Ma
 }
 
 template <typename Type>
-ImageProcessing::RGBImage<Type> ImageConversion::QImage2RGBImage(const QImage &img)
+ImageProcessing::RGBImage<Type> ImageProcessing::QImage2RGBImage(const QImage &img)
 {
     LinAlg::Matrix<Type> r(img.width(),img.height()), g(img.width(),img.height()), b(img.width(),img.height());
 
@@ -77,7 +77,7 @@ ImageProcessing::RGBImage<Type> ImageConversion::QImage2RGBImage(const QImage &i
 }
 
 template <typename Type>
-ImageProcessing::GrayImage<Type> ImageConversion::QImage2GrayImage(const QImage &img)
+ImageProcessing::GrayImage<Type> ImageProcessing::QImage2GrayImage(const QImage &img)
 {
     LinAlg::Matrix<Type> gray(img.width(),img.height());
     for(unsigned i = 0; i < img.width(); ++i)
@@ -91,7 +91,7 @@ ImageProcessing::GrayImage<Type> ImageConversion::QImage2GrayImage(const QImage 
 }
 
 template <typename Type>
-ImageProcessing::GrayImage<Type> ImageConversion::RGBImage2GrayImage(const ImageProcessing::RGBImage<Type> &rgbimg)
+ImageProcessing::GrayImage<Type> ImageProcessing::RGBImage2GrayImage(const ImageProcessing::RGBImage<Type> &rgbimg)
 {
     LinAlg::Matrix<Type> gray(rgbimg.getWidth(), rgbimg.getHeight()),
                         r = rgbimg.getRed(),

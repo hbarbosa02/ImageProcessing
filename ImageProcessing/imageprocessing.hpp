@@ -89,7 +89,7 @@ LinAlg::Matrix<Type> ImageProcessing::BitMap(const LinAlg::Matrix<Type> &mat, co
 }
 
 template<typename Type>
-LinAlg::Matrix<Type> ImageProcessing::Negative(const LinAlg::Matrix<Type> &mat)
+LinAlg::Matrix<Type> ImageProcessing::ColorInversion(const LinAlg::Matrix<Type> &mat)
 {
     LinAlg::Matrix<Type> ret(mat.getNumberOfRows(), mat.getNumberOfColumns());
     for(unsigned i = 1; i <= ret.getNumberOfRows(); ++i)
@@ -151,25 +151,19 @@ LinAlg::Matrix<Type> ImageProcessing::Scale(const LinAlg::Matrix<Type> &mat, con
 }
 
 template <typename Type>
-LinAlg::Matrix<Type> ImageProcessing::ReflectLtoR(const LinAlg::Matrix<Type> &mat)
+LinAlg::Matrix<Type> ImageProcessing::Reflect(const LinAlg::Matrix<Type> &mat, bool flag)
 {
     LinAlg::Matrix<Type> ret(mat.getNumberOfRows(), mat.getNumberOfColumns());
 
-    for(unsigned i = 1; i <= ret.getNumberOfRows(); ++i)
-        for(unsigned j = 1; j <= ret.getNumberOfColumns(); ++j)
-            ret(i,j) = mat(i,ret.getNumberOfColumns()-j+1);
-
-    return ret;
-}
-
-template <typename Type>
-LinAlg::Matrix<Type> ImageProcessing::ReflectUtoD(const LinAlg::Matrix<Type> &mat)
-{
-    LinAlg::Matrix<Type> ret(mat.getNumberOfRows(), mat.getNumberOfColumns());
-
-    for(unsigned i = 1; i <= ret.getNumberOfRows(); ++i)
-        for(unsigned j = 1; j <= ret.getNumberOfColumns(); ++j)
-            ret(i,j) = mat(ret.getNumberOfRows()-i+1,j);
+    if(flag){
+        for(unsigned i = 1; i <= ret.getNumberOfRows(); ++i)
+            for(unsigned j = 1; j <= ret.getNumberOfColumns(); ++j)
+                ret(i,j) = mat(i,ret.getNumberOfColumns()-j+1);
+    } else {
+        for(unsigned i = 1; i <= ret.getNumberOfRows(); ++i)
+            for(unsigned j = 1; j <= ret.getNumberOfColumns(); ++j)
+                ret(i,j) = mat(ret.getNumberOfRows()-i+1,j);
+    }
 
     return ret;
 }

@@ -12,7 +12,7 @@
 #include "SistemasdeControle/headers/graphicLibs/plot.h"
 #include "SistemasdeControle/headers/primitiveLibs/LinAlg/matrix.h"
 
-namespace ImagePreview
+namespace ImageProcessing
 {
     template <typename Type>
     void imShow(QImage img,QLabel *label);
@@ -24,9 +24,9 @@ namespace ImagePreview
     void imShow(LinAlg::Matrix<Type> img,QLabel *label);
 
     template <typename Type>
-    void plot(LinAlg::Matrix<Type> histograma, QWidget *widget){}
+    void plot(LinAlg::Matrix<Type> histograma, QWidget *widget);
     template <typename Type>
-    void bar(LinAlg::Matrix<Type> histograma, QWidget *widget){}
+    void bar(LinAlg::Matrix<Type> histograma, QWidget *widget);
 }
 
 #include "ImageProcessing/imagepreview.hpp"

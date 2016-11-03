@@ -4,7 +4,8 @@
 #include "SistemasdeControle/headers/primitiveLibs/LinAlg/matrix.h"
 #include "ImageProcessing/imageprocessing.h"
 
-namespace ImageProcessing {
+namespace ImageProcessing
+{
     template <typename Type>
     class GrayImage
     {
@@ -103,15 +104,17 @@ namespace ImageProcessing {
     ImageProcessing::GrayImage<Type> operator>= (ImageProcessing::GrayImage<Type> lhs, const Type& value);
 
     template <typename Type>
-    LinAlg::Matrix<Type> HistogramGray(const ImageProcessing::GrayImage<Type> &grayimg); //ok
+    LinAlg::Matrix<Type> Histogram(const ImageProcessing::GrayImage<Type> &grayimg); //ok
     template <typename Type>
     ImageProcessing::GrayImage<Type> Rotation(const ImageProcessing::GrayImage<Type> &grayimg, const double &angle);
     template <typename Type>
     ImageProcessing::GrayImage<Type> Scale(const ImageProcessing::GrayImage<Type> &grayimg, const double &scale);
     template <typename Type>
-    ImageProcessing::GrayImage<Type> ReflectLtoR(const ImageProcessing::GrayImage<Type> &grayimg);
+    ImageProcessing::GrayImage<Type> Reflect(const ImageProcessing::GrayImage<Type> &grayimg, bool flag = false);
     template <typename Type>
-    ImageProcessing::GrayImage<Type> ReflectUtoD(const ImageProcessing::GrayImage<Type> &grayimg);
+    ImageProcessing::GrayImage<Type> ColorInversion(const ImageProcessing::GrayImage<Type> &grayimg);
+    template <typename Type>
+    ImageProcessing::GrayImage<Type> BitMap(const ImageProcessing::GrayImage<Type> &grayimg, const double &limiar);
 
     template <typename Type>
     ImageProcessing::GrayImage<Type> MediaFilter(const ImageProcessing::GrayImage<Type> &grayimg, const int &sizeMask);

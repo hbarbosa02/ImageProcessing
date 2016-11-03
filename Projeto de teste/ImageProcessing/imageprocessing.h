@@ -5,8 +5,8 @@
 #include "SistemasdeControle/headers/primitiveLibs/LinAlg/linalg.h"
 #include "SistemasdeControle/headers/primitiveLibs/LinAlg/matrix.h"
 
-namespace ImageProcessing {
-
+namespace ImageProcessing
+{
     template <typename Type>
     int GetColorPixel(const Type &r,const Type &g, const Type &b); //ok
     template <typename Type>
@@ -23,22 +23,24 @@ namespace ImageProcessing {
     LinAlg::Matrix<Type> BitMap(const LinAlg::Matrix<Type> &mat, const unsigned &limiar);
 
     template<typename Type>
-    LinAlg::Matrix<Type> Negative(const LinAlg::Matrix<Type> &mat);
+    LinAlg::Matrix<Type> ColorInversion(const LinAlg::Matrix<Type> &mat);
     template <typename Type>
     LinAlg::Matrix<Type> Rotation(const LinAlg::Matrix<Type> &mat, const double &angle);
     template <typename Type>
     LinAlg::Matrix<Type> Scale(const LinAlg::Matrix<Type> &mat, const double &scale);
     template <typename Type>
-    LinAlg::Matrix<Type> ReflectLtoR(const LinAlg::Matrix<Type> &mat);
-    template <typename Type>
-    LinAlg::Matrix<Type> ReflectUtoD(const LinAlg::Matrix<Type> &mat);
+    LinAlg::Matrix<Type> Reflect(const LinAlg::Matrix<Type> &mat, bool flag = false);
 
     template <typename Type>
     LinAlg::Matrix<Type> MediaFilter(const LinAlg::Matrix<Type> &mat, const int &sizeMask);
     template <typename Type>
     LinAlg::Matrix<Type> MedianFilter(const LinAlg::Matrix<Type> &mat, const int &sizeMask);
     template <typename Type>
+    LinAlg::Matrix<Type> GaussianFilter(const LinAlg::Matrix<Type> &mat, const int &sizeMask, const double step){}
+    template <typename Type>
     LinAlg::Matrix<Type> SelfReinforcementFilter(const LinAlg::Matrix<Type> &mat, const int &sizeMask, const double &a);
+    template <typename Type>
+    LinAlg::Matrix<Type> Erosion(const LinAlg::Matrix<Type> &mat, const unsigned &rows, const unsigned &columns){}
 
 }
 #include "ImageProcessing/imageprocessing.hpp"
