@@ -55,7 +55,7 @@ LinAlg::Matrix<Type> ImageProcessing::Histogram(const LinAlg::Matrix<Type> &img)
 template <typename Type>
 LinAlg::Matrix<Type> ImageProcessing::ApplyingMask(const LinAlg::Matrix<Type> &mat, const LinAlg::Matrix<Type> &mask)
 {
-    LinAlg::Matrix<Type> ret = LinAlg::Zeros<Type>(mat.getNumberOfRows(),mat.getNumberOfColumns());
+    LinAlg::Matrix<Type> ret = mat;
     LinAlg::Matrix<Type> aux;
 
     unsigned rowSum = (int)mask.getNumberOfRows()/2;
@@ -73,23 +73,24 @@ LinAlg::Matrix<Type> ImageProcessing::ApplyingMask(const LinAlg::Matrix<Type> &m
 }
 
 template<typename Type>
-LinAlg::Matrix<Type> ImageProcessing::BitMap(const LinAlg::Matrix<Type> &mat, const unsigned &limiar)
+LinAlg::Matrix<bool> ImageProcessing::im2bw(const LinAlg::Matrix<Type> &mat, const unsigned &limiar)
 {
-    LinAlg::Matrix<Type> ret(mat.getNumberOfRows(), mat.getNumberOfColumns());
+    LinAlg::Matrix<bool> ret(mat.getNumberOfRows(), mat.getNumberOfColumns());
 
     for(unsigned i = 1; i <= ret.getNumberOfRows(); ++i)
         for(unsigned j = 1; j <= ret.getNumberOfColumns(); ++j)
         {
-            if(mat(i,j) > limiar)
-                ret(i,j) = 255;
+            if(mat(i,j) >= limiar)
+                ret(i,j) = true;
             else
-                ret(i,j) = 0;
+                ret(i,j) = false;
         }
     return ret;
 }
 
+
 template<typename Type>
-LinAlg::Matrix<Type> ImageProcessing::ColorInversion(const LinAlg::Matrix<Type> &mat)
+LinAlg::Matrix<Type> ImageProcessing::negative(const LinAlg::Matrix<Type> &mat)
 {
     LinAlg::Matrix<Type> ret(mat.getNumberOfRows(), mat.getNumberOfColumns());
     for(unsigned i = 1; i <= ret.getNumberOfRows(); ++i)
@@ -118,9 +119,7 @@ LinAlg::Matrix<Type> ImageProcessing::Rotation(const LinAlg::Matrix<Type> &mat, 
         for(unsigned j = 1; j <= ret.getNumberOfColumns(); ++j){
             p1(1,1) = i - p2(2,1);
             p1(2,1) = j - p2(1,1);
-
             pos = (rot *p1) + p2;
-
             if(pos(2,1)>0 && pos(2,1) <= mat.getNumberOfColumns() && pos(1,1)>0 && pos(1,1) <= mat.getNumberOfRows())
                 ret(i,j) = mat(Type(pos(1,1)),Type(pos(2,1)));
         }
@@ -214,6 +213,32 @@ LinAlg::Matrix<Type> ImageProcessing::MedianFilter(const LinAlg::Matrix<Type> &m
 }
 
 template <typename Type>
+LinAlg::Matrix<Type> ImageProcessing::GaussianFilter(const LinAlg::Matrix<Type> &mat, const int &sizeMask, const double step)
+{
+    if(sizeMask % 2 == 0){
+        std::cout << "sizeMask deve ser impar" << std::endl;
+        return mat;
+    } else{
+        LinAlg::Matrix<Type> ret = mat;
+        LinAlg::Matrix<double> mask(sizeMask,sizeMask);
+        int cont = (sizeMask/2) + 1;
+        double temp = 1 / (2*M_PI*(step*step)), x = 0, y = 0, aux;
+
+        for(unsigned i = 1; i <= mask.getNumberOfRows(); ++i)
+            for(unsigned j = 1; j <= mask.getNumberOfColumns(); ++j)
+            {
+                x = pow(abs(cont-i),2);
+                y = pow(abs(cont-j),2);
+                mask(i,j) = (temp * exp(-(x+y)/(2*step*step)));
+            }
+        aux = LinAlg::sum(mask);
+        ret = ImageProcessing::ApplyingMask<Type>(mat,mask);
+
+        return ImageProcessing::checkValue<Type>(ret);
+    }
+}
+
+template <typename Type>
 LinAlg::Matrix<Type> ImageProcessing::SelfReinforcementFilter(const LinAlg::Matrix<Type> &mat, const int &sizeMask, const double &a)
 {
     if(sizeMask % 2 == 0){
@@ -235,4 +260,168 @@ LinAlg::Matrix<Type> ImageProcessing::SelfReinforcementFilter(const LinAlg::Matr
         ret = LinAlg::abs<Type>(a*mat-ret);
         return ImageProcessing::checkValue<Type>(ret);
     }
+}
+
+template <typename Type>
+LinAlg::Matrix<bool> ImageProcessing::Erosion(const LinAlg::Matrix<bool> &mat)
+{
+    LinAlg::Matrix<bool> ret = LinAlg::Zeros<Type>(mat.getNumberOfRows(), mat.getNumberOfColumns());
+    if(sizeof(mat(1,1)) == sizeof(bool))
+    {
+        for(unsigned i = 1; i <= ret.getNumberOfRows(); ++i)
+            for(unsigned j = 1; j <= ret.getNumberOfColumns(); ++j)
+            {
+                if(mat(i,j) == 1){
+                    LinAlg::Matrix<bool>submat = ImageProcessing::ErosionMask<bool>(mat,i,j);
+                    LinAlg::Matrix<bool>one = LinAlg::Ones<bool>(3,3);
+                    if(LinAlg::isEqual<bool>(submat,one))
+                        ret(i,j) = 1;
+                }
+            }
+    }
+    else{
+        std::cout << "Apenas com Imagens Booleanas, ou seja binarias" << std::endl;
+    }
+
+    return ret;
+}
+
+template <typename Type>
+LinAlg::Matrix<Type> ImageProcessing::ErosionMask(const LinAlg::Matrix<Type> &mat, const unsigned &row, const unsigned &col)
+{
+    LinAlg::Matrix<Type> submat = LinAlg::Zeros<Type>(3,3), ret;
+    submat(2,2) = 1;
+
+    if(row-1 > 0)
+        if(mat(row-1,col) == 1)
+            submat(1,2) = 1;
+
+    if(row-1 > 0 && col+1 <= mat.getNumberOfColumns())
+        if(mat(row-1,col+1) == 1)
+            submat(1,3) = 1;
+
+    if(col+1 <= mat.getNumberOfColumns())
+        if(mat(row,col+1) == 1)
+            submat(2,3) = 1;
+
+    if(row+1 <= mat.getNumberOfRows() && col+1 <= mat.getNumberOfColumns())
+        if(mat(row+1,col+1) == 1)
+            submat(3,3) = 1;
+
+    if(row+1 <= mat.getNumberOfRows())
+        if(mat(row+1,col) == 1)
+            submat(3,2) = 1;
+
+    if(row+1 <= mat.getNumberOfRows() && col-1 > 0)
+        if(mat(row+1,col-1) == 1)
+            submat(3,1) = 1;
+
+    if(col-1 > 0 )
+        if(mat(row,col-1) == 1)
+            submat(2,1) = 1;
+
+    if(row-1 > 0 && col-1 > 0)
+        if(mat(row-1, col-1) == 1)
+            submat(1,1) = 1;
+
+    ret = submat;
+    return ret;
+}
+
+template <typename Type>
+unsigned ImageProcessing::bound(LinAlg::Matrix<bool> &mat)
+{
+    LinAlg::Matrix<unsigned> aux, x, y;
+    aux = mat;
+    unsigned ret;
+    unsigned cont = 0, cont2 = 1;
+    bool ok = false;
+
+    if(sizeof(mat(1,1)) == sizeof(bool))
+    {
+        for(unsigned i = 1; i <= aux.getNumberOfRows(); ++i){
+            for(unsigned j= 1; j <= aux.getNumberOfColumns(); ++j){
+                if(aux(i,j) == 1){
+                    x = LinAlg::Matrix<unsigned>(i);
+                    y = LinAlg::Matrix<unsigned>(j);
+                    aux(i,j) = cont + 1;
+                    ok = true;
+                    break;
+                }else{
+                    x = LinAlg::Zeros<unsigned>(1,1);
+                    y = LinAlg::Zeros<unsigned>(1,1);
+                }
+            }
+            if(ok)
+                break;
+        }
+
+        cont2 = 2;
+
+        while(x(1,1) != 0 && x(1,1) != 0){
+            for(unsigned j = 1; j <= aux.getNumberOfColumns()*aux.getNumberOfColumns(); ++j){
+                if(x.getNumberOfColumns() < j || y.getNumberOfColumns() < j)
+                    continue;
+                if(x(1,j)-1 > 0){
+                    if(aux(x(1,j)-1,y(1,j)) == 1){
+                        aux(x(1,j)-1,y(1,j)) = cont + 1;
+                        x = x | LinAlg::Matrix<unsigned>(x(1,j)-1);
+                        y = y | LinAlg::Matrix<unsigned>(y(1,j));
+                        cont2 = cont2+1;
+                    }
+                }
+                if(x(1,j)+1 <= aux.getNumberOfRows()){
+                    if(aux(x(1,j)+1,y(1,j)) == 1){
+                        aux(x(1,j)+1,y(1,j)) = cont+1;
+                        x = x | LinAlg::Matrix<unsigned>(x(1,j)+1);
+                        y = y | LinAlg::Matrix<unsigned>(y(1,j));
+                        cont2=cont2+1;
+                    }
+                }
+                if(y(1,j)-1 > 0){
+                   if(aux(x(1,j),y(1,j)-1) == 1){
+                        aux(x(1,j),y(1,j)-1) = cont+1;
+                        x = x | LinAlg::Matrix<unsigned>(x(1,j));
+                        y = y | LinAlg::Matrix<unsigned>(y(1,j)-1);
+                        cont2=cont2+1;
+                   }
+                }
+                if(y(1,j)+1 <= aux.getNumberOfColumns()){
+                    if(aux(x(1,j),y(1,j)+1) == 1){
+                        aux(x(1,j),y(1,j)+1) = cont+1;
+                        x = x | LinAlg::Matrix<unsigned>(x(1,j));
+                        y = y | LinAlg::Matrix<unsigned>(y(1,j)+1);
+                        cont2 = cont2+1;
+                    }
+                }
+            }
+            cont  = cont+1;
+            cont2 = 2;
+            ok = false;
+            for(unsigned i = 1; i <= aux.getNumberOfRows(); ++i){
+                for(unsigned j = 1; j <= aux.getNumberOfColumns(); ++j){
+                    if(aux(i,j) == 1){
+                        x = LinAlg::Matrix<unsigned>(i);
+                        y = LinAlg::Matrix<unsigned>(j);
+                        aux(i,j) = cont + 1;
+                        ok = true;
+                        break;
+                    }else{
+                        x = LinAlg::Zeros<unsigned>(1,1);
+                        y = LinAlg::Zeros<unsigned>(1,1);
+
+                    }
+                }
+                if(ok)
+                    break;
+            }
+        }
+        mat = aux;
+        ret = cont - 1;
+    }
+    else
+    {
+        std::cout << "Apenas com Imagens Booleanas, ou seja binarias" << std::endl;
+    }
+    return ret;
 }

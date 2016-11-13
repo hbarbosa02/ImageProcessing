@@ -103,15 +103,13 @@ namespace ImageProcessing
     ImageProcessing::RGBImage<Type> operator ^(const OtherType& lhs,ImageProcessing::RGBImage<Type> rhs){return rhs ^= lhs;}
 
     template <typename Type>
-    LinAlg::Matrix<Type> Histogram(const ImageProcessing::RGBImage<Type> &rgbimg); //ok
-    template <typename Type>
     ImageProcessing::RGBImage<Type> Rotation(const ImageProcessing::RGBImage<Type> &rgbimg, const double &angle);
     template <typename Type>
     ImageProcessing::RGBImage<Type> Scale(const ImageProcessing::RGBImage<Type> &rgbimg, const double &scale);
     template <typename Type>
     ImageProcessing::RGBImage<Type> Reflect(const ImageProcessing::RGBImage<Type> &rgbimg, bool flag = false);
     template <typename Type>
-    ImageProcessing::RGBImage<Type> ColorInversion(const ImageProcessing::RGBImage<Type> &rgbimg);
+    ImageProcessing::RGBImage<Type> negative(const ImageProcessing::RGBImage<Type> &rgbimg);
 
     template <typename Type>
     ImageProcessing::RGBImage<Type> MediaFilter(const ImageProcessing::RGBImage<Type> &rgbimg, const int &sizeMask);
@@ -120,6 +118,8 @@ namespace ImageProcessing
     template <typename Type>
     ImageProcessing::RGBImage<Type> SelfReinforcementFilter(const ImageProcessing::RGBImage<Type> &rgbimg, const int &sizeMask, const double &a);
 
+    template <typename Type>
+    LinAlg::Matrix<Type> Histogram(const ImageProcessing::RGBImage<Type> &rgbimg); //ok
 }
 #include "ImageProcessing/rgbimage.hpp"
 #endif // RGBIMAGE_H

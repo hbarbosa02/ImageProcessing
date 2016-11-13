@@ -587,3 +587,30 @@ LinAlg::Matrix<Type> LinAlg::selectionSort(const LinAlg::Matrix<Type> &vector)
     }
     return aux;
 }
+
+template <typename Type>
+LinAlg::Matrix<bool> conversion(const LinAlg::Matrix<Type> &mat){
+    LinAlg::Matrix<bool> ret(mat.getNumberOfRows(), mat.getNumberOfColumns());
+
+    for(unsigned i = 1; i <= ret.getNumberOfRows(); ++i)
+        for(unsigned j = 1; j <= ret.getNumberOfColumns(); ++j)
+            if(mat(i,j) != 0)
+                ret(i,j) = true;
+            else
+                ret(i,j) = false;
+
+    return ret;
+}
+template <typename Type>
+bool isEqual(const LinAlg::Matrix<bool> &rhs, const LinAlg::Matrix<bool> &lhs){
+    bool isequal = true;
+
+    for(unsigned i = 1; i <= rhs.getNumberOfRows(); ++i)
+        for(unsigned j = 1; j <= rhs.getNumberOfColumns(); ++j)
+            if(rhs(i,j) !=  lhs(i,j)){
+                isequal = false;
+                break;
+            }
+
+    return isequal;
+}

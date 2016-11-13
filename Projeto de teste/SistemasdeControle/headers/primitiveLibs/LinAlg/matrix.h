@@ -234,6 +234,11 @@ namespace LinAlg {
 
     template<typename Type>
     void Print (const LinAlg::Matrix<Type>& mat);
+
+    template <typename Type>
+    LinAlg::Matrix<bool> operator &(const LinAlg::Matrix<bool> &rhs, const LinAlg::Matrix<bool> &lhs);
+    template <typename Type>
+    LinAlg::Matrix<bool> operator ==(const LinAlg::Matrix<Type> &rhs, const LinAlg::Matrix<Type> &lhs);
 }
 
 #include "SistemasdeControle/src/primitiveLibs/LinAlg/matrix.hpp"

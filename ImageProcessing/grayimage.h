@@ -99,12 +99,10 @@ namespace ImageProcessing
     ImageProcessing::GrayImage<Type> operator ^(const OtherType& lhs,ImageProcessing::GrayImage<Type> rhs){return rhs ^= lhs;}
 
     template <typename Type>
-    ImageProcessing::GrayImage<Type> operator<= (ImageProcessing::GrayImage<Type> lhs, const Type& value);
+    LinAlg::Matrix<bool> operator<= (ImageProcessing::GrayImage<Type> lhs, const Type& value);
     template <typename Type>
-    ImageProcessing::GrayImage<Type> operator>= (ImageProcessing::GrayImage<Type> lhs, const Type& value);
+    LinAlg::Matrix<bool> operator>= (ImageProcessing::GrayImage<Type> lhs, const Type& value);
 
-    template <typename Type>
-    LinAlg::Matrix<Type> Histogram(const ImageProcessing::GrayImage<Type> &grayimg); //ok
     template <typename Type>
     ImageProcessing::GrayImage<Type> Rotation(const ImageProcessing::GrayImage<Type> &grayimg, const double &angle);
     template <typename Type>
@@ -112,9 +110,7 @@ namespace ImageProcessing
     template <typename Type>
     ImageProcessing::GrayImage<Type> Reflect(const ImageProcessing::GrayImage<Type> &grayimg, bool flag = false);
     template <typename Type>
-    ImageProcessing::GrayImage<Type> ColorInversion(const ImageProcessing::GrayImage<Type> &grayimg);
-    template <typename Type>
-    ImageProcessing::GrayImage<Type> BitMap(const ImageProcessing::GrayImage<Type> &grayimg, const double &limiar);
+    ImageProcessing::GrayImage<Type> negative(const ImageProcessing::GrayImage<Type> &grayimg);
 
     template <typename Type>
     ImageProcessing::GrayImage<Type> MediaFilter(const ImageProcessing::GrayImage<Type> &grayimg, const int &sizeMask);
@@ -123,6 +119,10 @@ namespace ImageProcessing
     template <typename Type>
     ImageProcessing::GrayImage<Type> SelfReinforcementFilter(const ImageProcessing::GrayImage<Type> &grayimg, const int &sizeMask, const double &a);
 
+    template <typename Type>
+    LinAlg::Matrix<Type> Histogram(const ImageProcessing::GrayImage<Type> &grayimg); //ok
+    template <typename Type>
+    LinAlg::Matrix<bool> im2bw(const ImageProcessing::GrayImage<Type> &grayimg, const double &limiar);
 }
 #include "ImageProcessing/grayimage.hpp"
 #endif // GRAYIMAGE_H

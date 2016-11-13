@@ -6,21 +6,21 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    img.load("F:/Unp/8ªSemestre/Visão Computacional/Nova pasta/Flor.bmp","BMP");
-    img2.load("F:/Unp/8ªSemestre/Visão Computacional/Nova pasta/Flor.bmp","BMP");
+    img.load("F:/Unp/8ªSemestre/Visão Computacional/Nova pasta/ovo2.jpg","JPG");
+    img2.load("F:/Unp/8ªSemestre/Visão Computacional/Nova pasta/test2.tif","TIF");
 
-    ImageProcessing::RGBImage<int> rgbimg = ImageProcessing::QImage2RGBImage<int>(img);
+//    ImageProcessing::RGBImage<double> rgbimg = ImageProcessing::QImage2RGBImage<double>(img);
+//    ImageProcessing::GrayImage<int> grayimg2 = ImageProcessing::QImage2GrayImage<int>(img2);
+//    ImageProcessing::GrayImage<int> aux;
 
     ImageProcessing::GrayImage<int> grayimg = ImageProcessing::QImage2GrayImage<int>(img);
-    ImageProcessing::GrayImage<int> grayimg2 = ImageProcessing::QImage2GrayImage<int>(img2);
-    ImageProcessing::RGBImage<int> aux;
-    aux = ImageProcessing::ColorInversion<int>(rgbimg);
+    LinAlg::Matrix<bool> aux = ImageProcessing::im2bw(grayimg,190);
 
-    ImageProcessing::imShow<int>(rgbimg,ui->label);
-    ImageProcessing::imShow<int>(aux,ui->label_2);
+    ImageProcessing::imShow(aux,ui->label);
+    ImageProcessing::imShow<int>(grayimg,ui->label_2);
 
-    ImageProcessing::plot<int>(ImageProcessing::Histogram<int>(grayimg),ui->widget_3);
-//    ImageProcessing::bar<int>(ImageProcessing::Histogram<int>(aux),ui->widget_4);
+    int n = ImageProcessing::bound<bool>(aux);
+    std::cout << n << std::endl;
 }
 
 MainWindow::~MainWindow()

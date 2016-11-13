@@ -105,3 +105,28 @@ ImageProcessing::GrayImage<Type> ImageProcessing::RGBImage2GrayImage(const Image
     ImageProcessing::GrayImage<Type> ret(gray);
     return ret;
 }
+
+template <typename Type>
+ImageProcessing::GrayImage<Type> Bitmap2GrayImage(const LinAlg::Matrix<bool> &img)
+{
+    LinAlg::Matrix<Type> gray(img.getNumberOfRows(), img.getNumberOfColumns());
+
+    for(unsigned i = 1; i <= gray.getNumberOfRows(); ++i)
+        for(unsigned j = 1; j <= gray.getNumberOfColumns(); ++j)
+            gray(i,j) = Type(img(i,j))*255;
+
+    ImageProcessing::GrayImage<Type> ret(gray);
+    return ret;
+}
+
+template <typename Type>
+LinAlg::Matrix<Type> Bitmap2GrayImage(const LinAlg::Matrix<bool> &img)
+{
+    LinAlg::Matrix<Type> ret(img.getNumberOfRows(), img.getNumberOfColumns());
+
+    for(unsigned i = 1; i <= ret.getNumberOfRows(); ++i)
+        for(unsigned j = 1; j <= ret.getNumberOfColumns(); ++j)
+            ret(i,j) = Type(img(i,j))*255;
+
+    return ret;
+}

@@ -149,19 +149,17 @@ ImageProcessing::GrayImage<Type>& ImageProcessing::GrayImage<Type>::operator ^=(
 }
 
 template <typename Type>
-ImageProcessing::GrayImage<Type> ImageProcessing::operator <=(ImageProcessing::GrayImage<Type> lhs, const Type& value)
+LinAlg::Matrix<bool> ImageProcessing::operator <=(ImageProcessing::GrayImage<Type> lhs, const Type& value)
 {
-    LinAlg::Matrix<Type> aux = ImageProcessing::BitMap(lhs.getGray(),value);
-    LinAlg::Matrix<Type> aux1 = ImageProcessing::ColorInversion<Type>(aux);
-    ImageProcessing::GrayImage<Type> ret(aux1);
+    LinAlg::Matrix<bool> aux = ImageProcessing::im2bw(lhs.getGray(),value);
+    LinAlg::Matrix<bool> ret = (1-aux);
     return ret;
 }
 
 template <typename Type>
-ImageProcessing::GrayImage<Type> ImageProcessing::operator >=(ImageProcessing::GrayImage<Type> lhs, const Type& value)
+LinAlg::Matrix<bool> ImageProcessing::operator >=(ImageProcessing::GrayImage<Type> lhs, const Type& value)
 {
-    LinAlg::Matrix<Type> aux = ImageProcessing::BitMap(lhs.getGray(),value);
-    ImageProcessing::GrayImage<Type> ret(aux);
+    LinAlg::Matrix<bool> ret = ImageProcessing::im2bw(lhs.getGray(),value);
     return ret;
 }
 
@@ -193,17 +191,9 @@ ImageProcessing::GrayImage<Type> ImageProcessing::Reflect(const ImageProcessing:
 }
 
 template <typename Type>
-ImageProcessing::GrayImage<Type> ImageProcessing::ColorInversion(const ImageProcessing::GrayImage<Type> &grayimg)
+ImageProcessing::GrayImage<Type> ImageProcessing::negative(const ImageProcessing::GrayImage<Type> &grayimg)
 {
-    ImageProcessing::GrayImage<Type> ret(ImageProcessing::ColorInversion<Type>(grayimg.getGray()));
-    return ret;
-}
-
-template <typename Type>
-ImageProcessing::GrayImage<Type> ImageProcessing::BitMap(const ImageProcessing::GrayImage<Type> &grayimg, const double &limiar)
-{
-    LinAlg::Matrix<Type> aux = ImageProcessing::BitMap(grayimg.getGray(),limiar);
-    ImageProcessing::GrayImage<Type> ret(aux);
+    ImageProcessing::GrayImage<Type> ret(ImageProcessing::negative<Type>(grayimg.getGray()));
     return ret;
 }
 
@@ -225,5 +215,12 @@ template <typename Type>
 ImageProcessing::GrayImage<Type> ImageProcessing::SelfReinforcementFilter(const ImageProcessing::GrayImage<Type> &grayimg, const int &sizeMask, const double &a)
 {
     ImageProcessing::GrayImage<Type> ret(ImageProcessing::SelfReinforcementFilter<Type>(grayimg.getGray(), sizeMask, a));
+    return ret;
+}
+
+template <typename Type>
+LinAlg::Matrix<bool> ImageProcessing::im2bw(const ImageProcessing::GrayImage<Type> &grayimg, const double &limiar)
+{
+    LinAlg::Matrix<bool> ret = ImageProcessing::im2bw(grayimg.getGray(),limiar);
     return ret;
 }

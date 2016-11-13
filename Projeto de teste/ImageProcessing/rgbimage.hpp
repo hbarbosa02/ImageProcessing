@@ -286,11 +286,11 @@ ImageProcessing::RGBImage<Type> ImageProcessing::Reflect(const ImageProcessing::
 }
 
 template <typename Type>
-ImageProcessing::RGBImage<Type> ImageProcessing::ColorInversion(const ImageProcessing::RGBImage<Type> &rgbimg)
+ImageProcessing::RGBImage<Type> ImageProcessing::negative(const ImageProcessing::RGBImage<Type> &rgbimg)
 {
-    LinAlg::Matrix<Type> r = ImageProcessing::ColorInversion<Type>(rgbimg.getRed()),
-                         g = ImageProcessing::ColorInversion<Type>(rgbimg.getGreen()),
-                         b = ImageProcessing::ColorInversion<Type>(rgbimg.getBlue());
+    LinAlg::Matrix<Type> r = ImageProcessing::negative<Type>(rgbimg.getRed()),
+                         g = ImageProcessing::negative<Type>(rgbimg.getGreen()),
+                         b = ImageProcessing::negative<Type>(rgbimg.getBlue());
 
     ImageProcessing::RGBImage<Type> ret(r,g,b);
     return ret;

@@ -250,7 +250,7 @@ void LinAlg::Matrix<Type>::swap (const LinAlg::Matrix<OtherMatrixType>& otherMat
 
     for(unsigned i = 0; i < temp.rows; i++)
         for(unsigned j = 0; j < temp.columns; j++)
-            temp.mat[i][j] = otherMatrix(i + 1, j + 1);
+            temp.mat[i][j] = (Type)otherMatrix(i + 1, j + 1);
 
     swap (rows, temp.rows);
     swap (columns, temp.columns);
@@ -1226,4 +1226,25 @@ void LinAlg::Print(const Matrix<Type>& mat)
 
     std::cout << std::endl;
   }
+}
+
+template <typename Type>
+LinAlg::Matrix<bool> operator &(const LinAlg::Matrix<bool> &rhs, const LinAlg::Matrix<bool> &lhs){
+    LinAlg::Matrix<bool> ret(rhs.getNumberOfRows(),rhs.getNumberOfColumns());
+
+    for(unsigned i = 1; i <= ret.getNumberOfRows(); ++i)
+        for(unsigned j = 1; j <= ret.getNumberOfColumns(); ++j)
+            ret(i,j) = rhs(i,j) &&  lhs(i,j);
+
+    return ret;
+}
+template <typename Type>
+LinAlg::Matrix<bool> operator ==(const LinAlg::Matrix<Type> &rhs, const LinAlg::Matrix<Type> &lhs){
+    LinAlg::Matrix<bool> ret(rhs.getNumberOfRows(),rhs.getNumberOfColumns());
+
+    for(unsigned i = 1; i <= ret.getNumberOfRows(); ++i)
+        for(unsigned j = 1; j <= ret.getNumberOfColumns(); ++j)
+            ret(i,j) = rhs(i,j) ==  lhs(i,j);
+
+    return ret;
 }

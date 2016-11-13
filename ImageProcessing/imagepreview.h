@@ -26,7 +26,15 @@ namespace ImageProcessing
     template <typename Type>
     void plot(LinAlg::Matrix<Type> histograma, QWidget *widget);
     template <typename Type>
+    void plot(ImageProcessing::GrayImage<Type> img, QWidget *widget);
+    template <typename Type>
+    void plot(ImageProcessing::RGBImage<Type> img, QWidget *widget){}
+    template <typename Type>
     void bar(LinAlg::Matrix<Type> histograma, QWidget *widget);
+    template <typename Type>
+    void bar(ImageProcessing::GrayImage<Type> img, QWidget *widget);
+    template <typename Type>
+    void bar(ImageProcessing::RGBImage<Type> img, QWidget *widget){}
 }
 
 #include "ImageProcessing/imagepreview.hpp"

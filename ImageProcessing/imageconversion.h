@@ -5,6 +5,7 @@
 #include "QColor"
 #include "ImageProcessing/grayimage.h"
 #include "ImageProcessing/rgbimage.h"
+#include "SistemasdeControle/headers/primitiveLibs/LinAlg/matrix.h"
 
 namespace ImageProcessing
 {
@@ -31,6 +32,10 @@ namespace ImageProcessing
     ImageProcessing::GrayImage<Type> QImage2GrayImage(const QImage &img); //ok
     template <typename Type>
     ImageProcessing::GrayImage<Type> RGBImage2GrayImage(const ImageProcessing::RGBImage<Type> &rgbimg);
+    template <typename Type>
+    ImageProcessing::GrayImage<Type> Bitmap2GrayImage(const LinAlg::Matrix<bool> &img);
+    template <typename Type>
+    LinAlg::Matrix<Type> Bitmap2GrayImage(const LinAlg::Matrix<bool> &img);
 
 }
 #include "ImageProcessing/imageconversion.hpp"
