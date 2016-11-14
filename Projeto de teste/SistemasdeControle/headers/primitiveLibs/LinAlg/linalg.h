@@ -97,9 +97,6 @@ namespace LinAlg {
 
     template <typename Type>
     LinAlg::Matrix<bool> conversion(const LinAlg::Matrix<Type> &mat);
-
-    template <typename Type>
-    bool isEqual(const LinAlg::Matrix<bool> &rhs, const LinAlg::Matrix<bool> &lhs);
 }
 
 #include "SistemasdeControle/src/primitiveLibs/LinAlg/linalg.hpp"

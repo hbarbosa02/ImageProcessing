@@ -601,16 +601,3 @@ LinAlg::Matrix<bool> conversion(const LinAlg::Matrix<Type> &mat){
 
     return ret;
 }
-template <typename Type>
-bool isEqual(const LinAlg::Matrix<bool> &rhs, const LinAlg::Matrix<bool> &lhs){
-    bool isequal = true;
-
-    for(unsigned i = 1; i <= rhs.getNumberOfRows(); ++i)
-        for(unsigned j = 1; j <= rhs.getNumberOfColumns(); ++j)
-            if(rhs(i,j) !=  lhs(i,j)){
-                isequal = false;
-                break;
-            }
-
-    return isequal;
-}

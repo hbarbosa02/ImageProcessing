@@ -152,7 +152,8 @@ template <typename Type>
 LinAlg::Matrix<bool> ImageProcessing::operator <=(ImageProcessing::GrayImage<Type> lhs, const Type& value)
 {
     LinAlg::Matrix<bool> aux = ImageProcessing::im2bw(lhs.getGray(),value);
-    LinAlg::Matrix<bool> ret = (1-aux);
+    LinAlg::Matrix<bool> ret = LinAlg::complement<Type>(aux);
+
     return ret;
 }
 

@@ -43,6 +43,31 @@ namespace LinAlg{
         }
         return ret;
     }
+
+    template <typename Type>
+    LinAlg::Matrix<bool> complement(const LinAlg::Matrix<bool> &rhs)
+    {
+        LinAlg::Matrix<bool> ret = rhs;
+        for(unsigned i = 1; i <= ret.getNumberOfRows(); ++i)
+            for(unsigned j = 1; j <= ret.getNumberOfColumns(); ++j)
+                ret(i,j) = !rhs(i,j);
+
+        return ret;
+    }
+
+    template <typename Type>
+    bool isEqual(const LinAlg::Matrix<bool> &rhs, const LinAlg::Matrix<bool> &lhs){
+        bool isequal = true;
+
+        for(unsigned i = 1; i <= rhs.getNumberOfRows(); ++i)
+            for(unsigned j = 1; j <= rhs.getNumberOfColumns(); ++j)
+                if(rhs(i,j) !=  lhs(i,j)){
+                    isequal = false;
+                    break;
+                }
+
+        return isequal;
+    }
 }
 
 namespace ImageProcessing
@@ -82,7 +107,8 @@ namespace ImageProcessing
     LinAlg::Matrix<bool> Erosion(const LinAlg::Matrix<bool> &mat);
     template <typename Type>
     LinAlg::Matrix<Type> ErosionMask(const LinAlg::Matrix<Type> &mat, const unsigned &row, const unsigned &col);
-
+    template <typename Type>
+    LinAlg::Matrix<bool> Dilatation(const LinAlg::Matrix<bool> &mat);
 
     template <typename Type>
     unsigned bound(LinAlg::Matrix<bool> &mat);
