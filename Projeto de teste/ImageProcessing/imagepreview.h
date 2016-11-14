@@ -17,11 +17,11 @@ namespace ImageProcessing
     template <typename Type>
     void imShow(QImage img,QLabel *label);
     template <typename Type>
-    void imShow(ImageProcessing::GrayImage<Type> img,QLabel *label);
+    void imShow(LinAlg::Matrix<Type> img,QLabel *label);
     template <typename Type>
     void imShow(ImageProcessing::RGBImage<Type> img,QLabel *label);
     template <typename Type>
-    void imShow(LinAlg::Matrix<Type> img,QLabel *label);
+    void imShow(ImageProcessing::GrayImage<Type> img,QLabel *label);
 
     template <typename Type>
     void plot(LinAlg::Matrix<Type> histograma, QWidget *widget);
@@ -29,6 +29,7 @@ namespace ImageProcessing
     void plot(ImageProcessing::GrayImage<Type> img, QWidget *widget);
     template <typename Type>
     void plot(ImageProcessing::RGBImage<Type> img, QWidget *widget){}
+
     template <typename Type>
     void bar(LinAlg::Matrix<Type> histograma, QWidget *widget);
     template <typename Type>

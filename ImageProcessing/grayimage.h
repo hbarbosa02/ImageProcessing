@@ -117,7 +117,9 @@ namespace ImageProcessing
     template <typename Type>
     ImageProcessing::GrayImage<Type> MedianFilter(const ImageProcessing::GrayImage<Type> &grayimg, const int &sizeMask);
     template <typename Type>
-    ImageProcessing::GrayImage<Type> SelfReinforcementFilter(const ImageProcessing::GrayImage<Type> &grayimg, const int &sizeMask, const double &a);
+    ImageProcessing::GrayImage<Type> SelfReinforcementFilter(const ImageProcessing::GrayImage<Type> &grayimg, const int &sizeMask, double a = 1);
+    template <typename Type>
+    ImageProcessing::GrayImage<Type> GaussianFilter(const ImageProcessing::GrayImage<Type> &grayimg, const int &sizeMask, double step = 1);
 
     template <typename Type>
     LinAlg::Matrix<Type> Histogram(const ImageProcessing::GrayImage<Type> &grayimg); //ok

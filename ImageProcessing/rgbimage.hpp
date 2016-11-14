@@ -317,14 +317,3 @@ ImageProcessing::RGBImage<Type> ImageProcessing::MedianFilter(const ImageProcess
     ImageProcessing::RGBImage<Type> ret(r,g,b);
     return ret;
 }
-
-template <typename Type>
-ImageProcessing::RGBImage<Type> ImageProcessing::SelfReinforcementFilter(const ImageProcessing::RGBImage<Type> &rgbimg, const int &sizeMask, const double &a)
-{
-    LinAlg::Matrix<Type> r = ImageProcessing::SelfReinforcementFilter<Type>(rgbimg.getRed(),sizeMask,a),
-                         g = ImageProcessing::SelfReinforcementFilter<Type>(rgbimg.getGreen(),sizeMask,a),
-                         b = ImageProcessing::SelfReinforcementFilter<Type>(rgbimg.getBlue(),sizeMask,a);
-
-    ImageProcessing::RGBImage<Type> ret(r,g,b);
-    return ret;
-}

@@ -55,20 +55,34 @@ LinAlg::Matrix<Type> ImageProcessing::Histogram(const LinAlg::Matrix<Type> &img)
 template <typename Type>
 LinAlg::Matrix<Type> ImageProcessing::ApplyingMask(const LinAlg::Matrix<Type> &mat, const LinAlg::Matrix<Type> &mask)
 {
-    LinAlg::Matrix<Type> ret = mat;
+    LinAlg::Matrix<Type> ret = ImageProcessing::completing<Type>(mat,mask.getNumberOfRows());
     LinAlg::Matrix<Type> aux;
+    unsigned n = (int)mask.getNumberOfRows()/2;
 
-    unsigned rowSum = (int)mask.getNumberOfRows()/2;
-    unsigned colSum = (int)mask.getNumberOfColumns()/2;
-    unsigned rowLim = ret.getNumberOfRows() - mask.getNumberOfRows() +1;
-    unsigned colLim = ret.getNumberOfColumns() - mask.getNumberOfColumns() +1;
-
-    for(unsigned i = 1; i <= rowLim; ++i){
-        for(unsigned j = 1; j <= colLim; ++j){
-            aux = mat(from(i+mask.getNumberOfRows()-1)-->(i),from(j+mask.getNumberOfColumns()-1)-->(j));
-            ret(i+rowSum,j+colSum) = LinAlg::sum(LinAlg::multPointToPoint(aux,mask));
+    for(unsigned i = n; i <= ret.getNumberOfRows()-n-1; ++i){
+        for(unsigned j = n; j <= ret.getNumberOfColumns()-n-1; ++j){
+            aux = ret(from(i-n+mask.getNumberOfRows())-->(i-n+1),from(j-n+mask.getNumberOfColumns())-->(j-n+1));
+            ret(i+1,j+1) = LinAlg::sum(LinAlg::multPointToPoint(aux,mask));
         }
     }
+    ret = ImageProcessing::pullingOut<Type>(ret,mask.getNumberOfRows());
+    return ret;
+}
+
+template <typename Type, typename OtherType>
+LinAlg::Matrix<Type> ImageProcessing::ApplyingMask(const LinAlg::Matrix<Type> &mat, const LinAlg::Matrix<OtherType> &mask)
+{
+    LinAlg::Matrix<Type> ret = ImageProcessing::completing<Type>(mat,mask.getNumberOfRows());
+    LinAlg::Matrix<Type> aux;
+    unsigned n = (int)mask.getNumberOfRows()/2;
+
+    for(unsigned i = n; i <= ret.getNumberOfRows()-n-1; ++i){
+        for(unsigned j = n; j <= ret.getNumberOfColumns()-n-1; ++j){
+            aux = ret(from(i-n+mask.getNumberOfRows())-->(i-n+1),from(j-n+mask.getNumberOfColumns())-->(j-n+1));
+            ret(i+1,j+1) = LinAlg::sum(LinAlg::multPointToPoint(aux,mask));
+        }
+    }
+    ret = ImageProcessing::pullingOut<Type>(ret,mask.getNumberOfRows());
     return ret;
 }
 
@@ -174,17 +188,18 @@ LinAlg::Matrix<Type> ImageProcessing::MediaFilter(const LinAlg::Matrix<Type> &ma
         std::cout << "sizeMask deve ser impar" << std::endl;
         return mat;
     } else{
-        LinAlg::Matrix<Type> ret = mat;
-        LinAlg::Matrix<Type> aux;
+        LinAlg::Matrix<Type> aux2 = ImageProcessing::completing<Type>(mat,sizeMask);
+        LinAlg::Matrix<Type> aux, ret = aux2;
         int n = sizeMask / 2;
         Type temp = 0;
 
-        for(unsigned i = 1+n; i <= ret.getNumberOfRows()-n; ++i)
-            for(unsigned j = 1+n; j <= ret.getNumberOfColumns()-n; ++j){
-                aux = mat(from(i-n)-->(i+n),from(j-n)-->(j+n));
+        for(unsigned i = n; i <= ret.getNumberOfRows()-n-1; ++i)
+            for(unsigned j = n; j <= ret.getNumberOfColumns()-n-1; ++j){
+                aux = aux2(from(i-n+1)-->(i-n+sizeMask),from(j-n+1)-->(j-n+sizeMask));
                 temp = LinAlg::sum(aux)/(sizeMask*sizeMask);
-                ret(i,j) = temp;
+                ret(i+1,j+1) = temp;
             }
+        ret = ImageProcessing::pullingOut<Type>(aux2,sizeMask);
         return ret;
     }
 }
@@ -192,28 +207,29 @@ LinAlg::Matrix<Type> ImageProcessing::MediaFilter(const LinAlg::Matrix<Type> &ma
 template <typename Type>
 LinAlg::Matrix<Type> ImageProcessing::MedianFilter(const LinAlg::Matrix<Type> &mat, const int &sizeMask)
 {
-    LinAlg::Matrix<Type> ret = mat;
-    LinAlg::Matrix<Type> aux;
+    LinAlg::Matrix<Type> aux2 = ImageProcessing::completing<Type>(mat,sizeMask);
+    LinAlg::Matrix<Type> aux, ret = aux2;
     int n = sizeMask / 2, g = (sizeMask*sizeMask)/2;
 
     Type temp = 0;
 
-    for(unsigned i = 1+n; i <= ret.getNumberOfRows()-n; ++i)
-        for(unsigned j = 1+n; j <= ret.getNumberOfColumns()-n; ++j){
-            aux = mat(from(i-n)-->(i+n),from(j-n)-->(j+n));
+    for(unsigned i = n; i <= ret.getNumberOfRows()-n-1; ++i)
+        for(unsigned j = n; j <= ret.getNumberOfColumns()-n-1; ++j){
+            aux = aux2(from(i-n+1)-->(i-n+sizeMask),from(j-n+1)-->(j-n+sizeMask));
             aux = LinAlg::selectionSort<Type>(aux);
             if(sizeMask % 2 == 0)
                 temp = (aux(1,g) + aux(1,g+1))/2;
             else
                 temp = aux(1,g);
 
-            ret(i,j) = temp;
+            ret(i+1,j+1) = temp;
         }
+    ret = ImageProcessing::pullingOut<Type>(ret,sizeMask);
     return ret;
 }
 
 template <typename Type>
-LinAlg::Matrix<Type> ImageProcessing::GaussianFilter(const LinAlg::Matrix<Type> &mat, const int &sizeMask, const double step)
+LinAlg::Matrix<Type> ImageProcessing::GaussianFilter(const LinAlg::Matrix<Type> &mat, const int &sizeMask, double step)
 {
     if(sizeMask % 2 == 0){
         std::cout << "sizeMask deve ser impar" << std::endl;
@@ -239,24 +255,27 @@ LinAlg::Matrix<Type> ImageProcessing::GaussianFilter(const LinAlg::Matrix<Type> 
 }
 
 template <typename Type>
-LinAlg::Matrix<Type> ImageProcessing::SelfReinforcementFilter(const LinAlg::Matrix<Type> &mat, const int &sizeMask, const double &a)
+LinAlg::Matrix<Type> ImageProcessing::SelfReinforcementFilter(const LinAlg::Matrix<Type> &mat, const int &sizeMask, double a)
 {
     if(sizeMask % 2 == 0){
         std::cout << "sizeMask deve ser impar" << std::endl;
         return mat;
     } else{
-        LinAlg::Matrix<Type> ret = mat;
+
         LinAlg::Matrix<Type> aux, filtro;
+        LinAlg::Matrix<Type> aux2 = ImageProcessing::completing<Type>(mat,sizeMask);
+        LinAlg::Matrix<Type> ret = aux2;
         filtro = LinAlg::Ones<Type>(sizeMask,sizeMask);
         int n = sizeMask / 2;
         Type temp = 0;
 
-        for(unsigned i = 1+n; i <= ret.getNumberOfRows()-n; ++i)
-            for(unsigned j = 1+n; j <= ret.getNumberOfColumns()-n; ++j){
-                aux = mat(from(i-n)-->(i+n),from(j-n)-->(j+n));
+        for(unsigned i = n; i <= ret.getNumberOfRows()-n-1; ++i)
+            for(unsigned j = n; j <= ret.getNumberOfColumns()-n-1; ++j){
+                aux = aux2(from(i-n+1)-->(i-n+sizeMask),from(j-n+1)-->(j-n+sizeMask));
                 temp = LinAlg::sum<Type>(LinAlg::multPointToPoint<Type>(aux,filtro));
                 ret(i,j) = temp;
             }
+        ret = ImageProcessing::pullingOut<Type>(ret,sizeMask);
         ret = LinAlg::abs<Type>(a*mat-ret);
         return ImageProcessing::checkValue<Type>(ret);
     }

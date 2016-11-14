@@ -212,9 +212,16 @@ ImageProcessing::GrayImage<Type> ImageProcessing::MedianFilter(const ImageProces
 }
 
 template <typename Type>
-ImageProcessing::GrayImage<Type> ImageProcessing::SelfReinforcementFilter(const ImageProcessing::GrayImage<Type> &grayimg, const int &sizeMask, const double &a)
+ImageProcessing::GrayImage<Type> ImageProcessing::SelfReinforcementFilter(const ImageProcessing::GrayImage<Type> &grayimg, const int &sizeMask, double a)
 {
     ImageProcessing::GrayImage<Type> ret(ImageProcessing::SelfReinforcementFilter<Type>(grayimg.getGray(), sizeMask, a));
+    return ret;
+}
+
+template <typename Type>
+ImageProcessing::GrayImage<Type> ImageProcessing::GaussianFilter(const ImageProcessing::GrayImage<Type> &grayimg, const int &sizeMask, double step)
+{
+    ImageProcessing::GrayImage<Type> ret(ImageProcessing::GaussianFilter<Type>(grayimg.getGray(), sizeMask, step));
     return ret;
 }
 
