@@ -17,6 +17,31 @@ ImageProcessing::GrayImage<Type>::GrayImage(const LinAlg::Matrix<Type> &gray)
 }
 
 template <typename Type>
+ImageProcessing::GrayImage<Type>::GrayImage(const LinAlg::Matrix<bool> &gray)
+{
+    LinAlg::Matrix<Type> ret(gray.getNumberOfRows(), gray.getNumberOfColumns());
+
+    for(unsigned i = 1; i <= ret.getNumberOfRows(); ++i)
+        for(unsigned j = 1; j <= ret.getNumberOfColumns(); ++j)
+            ret(i,j) = Type(gray(i,j))*255;
+
+    this->gray = ImageProcessing::checkValue<Type>(ret);
+
+    this->width = ret.getNumberOfRows();
+    this->height = ret.getNumberOfColumns();
+    this->a = 255;
+}
+
+template <typename Type>
+ImageProcessing::GrayImage<Type>::GrayImage(const ImageProcessing::GrayImage<Type> &gray)
+{
+    this->gray = gray.getGray();
+
+    this->width = gray.getWidth();
+    this->height = gray.getHeight();
+    this->a = 255;
+}
+template <typename Type>
 ImageProcessing::GrayImage<Type>& ImageProcessing::GrayImage<Type>::operator =(const ImageProcessing::GrayImage<Type>& grayImg)
 {
     this->gray = grayImg.getGray();

@@ -12,13 +12,15 @@ namespace ImageProcessing
     {
         public:
             RGBImage(){}
-            RGBImage(const LinAlg::Matrix<Type> &r, const LinAlg::Matrix<Type> &g, const LinAlg::Matrix<Type> &b);
+            RGBImage(const LinAlg::Matrix<Type> &r,
+                     const LinAlg::Matrix<Type> &g,
+                     const LinAlg::Matrix<Type> &b);
+            RGBImage(const ImageProcessing::RGBImage<Type> &rgb);
             ~RGBImage();
 
             LinAlg::Matrix<Type> getRed()   const {return this->red;}
             LinAlg::Matrix<Type> getGreen() const {return this->green;}
             LinAlg::Matrix<Type> getBlue()  const {return this->blue;}
-            LinAlg::Matrix<Type> getRGB()   const {return this->rgb;}
 
             unsigned getWidth() const {return this->width;}
             unsigned getHeight()const {return this->height;}
@@ -51,7 +53,7 @@ namespace ImageProcessing
             ImageProcessing::RGBImage<Type>& operator^= (const RightType& value);
 
         private:
-            LinAlg::Matrix<Type> red,green,blue,rgb;
+            LinAlg::Matrix<Type> red,green,blue;
             unsigned height, width, a;
     };
 

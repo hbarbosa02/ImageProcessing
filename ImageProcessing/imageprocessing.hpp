@@ -359,9 +359,10 @@ LinAlg::Matrix<bool> ImageProcessing::Dilatation(const LinAlg::Matrix<bool> &mat
 }
 
 template <typename Type>
-unsigned ImageProcessing::bound(LinAlg::Matrix<bool> &mat)
+LinAlg::Matrix<LinAlg::Matrix<Type> > ImageProcessing::bound(LinAlg::Matrix<bool> &mat)
 {
-    LinAlg::Matrix<unsigned> aux,   x = LinAlg::Zeros<unsigned>(1,4*mat.getNumberOfColumns()*mat.getNumberOfRows()),
+    LinAlg::Matrix<LinAlg::Matrix<unsigned> > t(1,2);
+    LinAlg::Matrix<Type> aux,       x = LinAlg::Zeros<unsigned>(1,4*mat.getNumberOfColumns()*mat.getNumberOfRows()),
                                     y = LinAlg::Zeros<unsigned>(1,4*mat.getNumberOfColumns()*mat.getNumberOfRows());
     aux = mat;
     unsigned ret;
@@ -446,12 +447,34 @@ unsigned ImageProcessing::bound(LinAlg::Matrix<bool> &mat)
                     break;
             }
         }
-        mat = aux;
         ret = cont - 1;
     }
     else
     {
         std::cout << "Apenas com Imagens Booleanas, ou seja binarias" << std::endl;
     }
+    t(1,1) = LinAlg::Matrix<Type>((Type)ret);
+    t(1,2) = aux;
+    return t;
+}
+
+template <typename Type>
+LinAlg::Matrix<Type> completing(const LinAlg::Matrix<Type> &mat, const unsigned &sizemask)
+{
+    unsigned n = (int)sizemask/2;
+    LinAlg::Matrix<Type> ret = LinAlg::Zeros<Type>(mat.getNumberOfRows()+n*2,mat.getNumberOfColumns()+n*2);
+
+    for(unsigned i = n; i <= ret.getNumberOfRows()-n-1; ++i)
+        for(unsigned j = n; j <= ret.getNumberOfColumns()-n-1; ++j)
+            ret(i+1,j+1) = mat(abs(i-n+1),abs(j-n+1));
+
+    return ret;
+}
+template <typename Type>
+LinAlg::Matrix<Type> pullingOut(const LinAlg::Matrix<Type> &completingMat, const unsigned &sizemask)
+{
+    unsigned n = (unsigned)sizemask/2;
+    LinAlg::Matrix<Type> ret;
+    ret = completingMat(from(n+1)-->completingMat.getNumberOfRows()-n,from(n+1)-->completingMat.getNumberOfColumns()-n);
     return ret;
 }

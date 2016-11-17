@@ -97,7 +97,7 @@ namespace ImageProcessing
     template <typename Type>
     LinAlg::Matrix<Type> MedianFilter(const LinAlg::Matrix<Type> &mat, const int &sizeMask);
     template <typename Type>
-    LinAlg::Matrix<Type> GaussianFilter(const LinAlg::Matrix<Type> &mat, const int &sizeMask, double step = 1);
+    LinAlg::Matrix<Type> GaussianFilter(const LinAlg::Matrix<Type> &mat, const int &sizeMask, double step = 1); // 0.5 <= step <= 1.2
     template <typename Type>
     LinAlg::Matrix<Type> SelfReinforcementFilter(const LinAlg::Matrix<Type> &mat, const int &sizeMask, double a = 1);
 
@@ -109,34 +109,17 @@ namespace ImageProcessing
     LinAlg::Matrix<Type> ErosionMask(const LinAlg::Matrix<Type> &mat, const unsigned &row, const unsigned &col);
     template <typename Type>
     LinAlg::Matrix<bool> Dilatation(const LinAlg::Matrix<bool> &mat);
-
     template <typename Type>
-    unsigned bound(LinAlg::Matrix<bool> &mat);
+    LinAlg::Matrix< LinAlg::Matrix<Type> > bound(LinAlg::Matrix<bool> &mat);
 
     template <typename Type>
     int GetColorPixel(const Type &r,const Type &g, const Type &b); //ok
 
-    //testes
     template <typename Type>
-    LinAlg::Matrix<Type> completing(const LinAlg::Matrix<Type> &mat, const unsigned &sizemask)
-    {
-        unsigned n = (int)sizemask/2;
-        LinAlg::Matrix<Type> ret = LinAlg::Zeros<Type>(mat.getNumberOfRows()+n*2,mat.getNumberOfColumns()+n*2);
-
-        for(unsigned i = n; i <= ret.getNumberOfRows()-n-1; ++i)
-            for(unsigned j = n; j <= ret.getNumberOfColumns()-n-1; ++j)
-                ret(i+1,j+1) = mat(abs(i-n+1),abs(j-n+1));
-
-        return ret;
-    }
+    LinAlg::Matrix<Type> completing(const LinAlg::Matrix<Type> &mat, const unsigned &sizemask);
     template <typename Type>
-    LinAlg::Matrix<Type> pullingOut(const LinAlg::Matrix<Type> &completingMat, const unsigned &sizemask)
-    {
-        unsigned n = (unsigned)sizemask/2;
-        LinAlg::Matrix<Type> ret;
-        ret = completingMat(from(n+1)-->completingMat.getNumberOfRows()-n,from(n+1)-->completingMat.getNumberOfColumns()-n);
-        return ret;
-    }
+    LinAlg::Matrix<Type> pullingOut(const LinAlg::Matrix<Type> &completingMat, const unsigned &sizemask);
+
 }
 #include "ImageProcessing/imageprocessing.hpp"
 #endif // IMAGEPROCESSING_H

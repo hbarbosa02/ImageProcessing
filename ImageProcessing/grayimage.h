@@ -12,6 +12,8 @@ namespace ImageProcessing
         public:
             GrayImage(){}
             GrayImage(const LinAlg::Matrix<Type> &gray);
+            GrayImage(const LinAlg::Matrix<bool> &gray);
+            GrayImage(const ImageProcessing::GrayImage<Type> &gray);
             ~GrayImage();
 
             LinAlg::Matrix<Type> getGray() const {return this->gray;}
@@ -20,8 +22,8 @@ namespace ImageProcessing
             unsigned getHeight()const {return this->height;}
 
             ImageProcessing::GrayImage<Type>& operator= (const ImageProcessing::GrayImage<Type> &grayImg);
-            template<typename RightType>
-            ImageProcessing::GrayImage<Type>& operator= (const ImageProcessing::GrayImage<RightType>& grayImg);
+            template<typename OtherType>
+            ImageProcessing::GrayImage<Type>& operator= (const ImageProcessing::GrayImage<OtherType>& grayImg);
 
             ImageProcessing::GrayImage<Type>& operator+= (const ImageProcessing::GrayImage<Type>& grayImg);
             ImageProcessing::GrayImage<Type>& operator+= (const Type& value);

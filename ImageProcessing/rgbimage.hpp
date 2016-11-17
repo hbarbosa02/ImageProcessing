@@ -12,10 +12,21 @@ ImageProcessing::RGBImage<Type>::RGBImage(const LinAlg::Matrix<Type> &r, const L
     this->red = ImageProcessing::checkValue<Type>(r);
     this->green = ImageProcessing::checkValue<Type>(g);
     this->blue = ImageProcessing::checkValue<Type>(b);
-    //this->rgb = ImageProcessing::GetPixel<Type>(r,g,b);
 
     this->width = r.getNumberOfRows();
     this->height = r.getNumberOfColumns();
+    this->a = 255;
+}
+
+template <typename Type>
+ImageProcessing::RGBImage<Type>::RGBImage(const ImageProcessing::RGBImage<Type> &rgb)
+{
+    this->red = rgb.getRed();
+    this->green = rgb.getGreen();
+    this->blue = rgb.getBlue();
+
+    this->width = rgb.getWidth();
+    this->height = rgb.getHeight();
     this->a = 255;
 }
 

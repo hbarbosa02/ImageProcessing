@@ -20,6 +20,18 @@ QImage ImageProcessing::Bitmap2QImage(const LinAlg::Matrix<Type> bitmap)
 }
 
 template <typename Type>
+QImage ImageProcessing::Bitmap2QImage(const LinAlg::Matrix<bool> &img)
+{
+    LinAlg::Matrix<Type> ret(img.getNumberOfRows(), img.getNumberOfColumns());
+
+    for(unsigned i = 1; i <= ret.getNumberOfRows(); ++i)
+        for(unsigned j = 1; j <= ret.getNumberOfColumns(); ++j)
+            ret(i,j) = Type(img(i,j))*255;
+
+    return ImageProcessing::SetPixel<Type>(ret,ret,ret);
+}
+
+template <typename Type>
 QImage ImageProcessing::RedImage(const ImageProcessing::RGBImage<Type> &rgbImg)
 {
     LinAlg::Matrix<Type> g = LinAlg::Zeros<Type>(rgbImg.getWidth(), rgbImg.getHeight());

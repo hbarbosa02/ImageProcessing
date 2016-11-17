@@ -5,10 +5,12 @@
 #include "QLabel"
 #include "QWidget"
 #include "qcustomplot.h"
+
 #include "ImageProcessing/grayimage.h"
 #include "ImageProcessing/rgbimage.h"
 #include "ImageProcessing/imageconversion.h"
 #include "ImageProcessing/imageprocessing.h"
+
 #include "SistemasdeControle/headers/graphicLibs/plot.h"
 #include "SistemasdeControle/headers/primitiveLibs/LinAlg/matrix.h"
 
