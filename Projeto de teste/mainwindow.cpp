@@ -6,20 +6,19 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    img.load("F:/Unp/8ªSemestre/Visão Computacional/Nova pasta/eight.tif","TIF");
-    img2.load("F:/Unp/8ªSemestre/Visão Computacional/Nova pasta/test1.tif","TIF");
+    img.load("F:/Unp/8ªSemestre/Visão Computacional/Nova pasta/ftd.tif","TIF");
+    img2.load("F:/Unp/8ªSemestre/Visão Computacional/Nova pasta/coins.png","PNG");
 
-    ImageProcessing::GrayImage<int> grayimg = ImageProcessing::QImage2GrayImage<int>(img2);
+    ImageProcessing::GrayImage<int> grayimg = ImageProcessing::QImage2GrayImage<int>(img);
+//    LinAlg::Matrix<bool>imgBw = (grayimg >= 100);
+//    ImageProcessing::imShow(grayimg,ui->label);
+//    imgBw = ImageProcessing::Dilatation<bool>(imgBw);
+//    LinAlg::Matrix<LinAlg::Matrix<unsigned> > n = ImageProcessing::bound<unsigned>(imgBw);
+//    ImageProcessing::imShow(n(1,2)*20,ui->label_2);
+//    std::cout << n(1,1) << std::endl;
 
-    LinAlg::Matrix<bool>imgBw = (grayimg >= 180);
-    ImageProcessing::imShow(imgBw,ui->label);
-
-    imgBw = ImageProcessing::Dilatation<bool>(imgBw);
-
-    LinAlg::Matrix<LinAlg::Matrix<unsigned>> n = ImageProcessing::bound<unsigned>(imgBw);
-    std::cout << n(1,1) << std::endl;
-
-    ImageProcessing::imShow(n(1,2)*20,ui->label_2);
+    LinAlg::Matrix<int> test = ImageProcessing::ft2d<int>(grayimg.getGray(),5);
+    ImageProcessing::imShow(test,ui->label_2);
 }
 
 MainWindow::~MainWindow()

@@ -286,7 +286,7 @@ ImageProcessing::RGBImage<Type> ImageProcessing::Scale(const ImageProcessing::RG
 }
 
 template <typename Type>
-ImageProcessing::RGBImage<Type> ImageProcessing::Reflect(const ImageProcessing::RGBImage<Type> &rgbimg, const bool &flag = 0)
+ImageProcessing::RGBImage<Type> ImageProcessing::Reflect(const ImageProcessing::RGBImage<Type> &rgbimg, bool flag)
 {
     LinAlg::Matrix<Type> r = ImageProcessing::Reflect<Type>(rgbimg.getRed(),flag),
                          g = ImageProcessing::Reflect<Type>(rgbimg.getGreen(),flag),
@@ -324,6 +324,17 @@ ImageProcessing::RGBImage<Type> ImageProcessing::MedianFilter(const ImageProcess
     LinAlg::Matrix<Type> r = ImageProcessing::MedianFilter<Type>(rgbimg.getRed(),sizeMask),
                          g = ImageProcessing::MedianFilter<Type>(rgbimg.getGreen(),sizeMask),
                          b = ImageProcessing::MedianFilter<Type>(rgbimg.getBlue(),sizeMask);
+
+    ImageProcessing::RGBImage<Type> ret(r,g,b);
+    return ret;
+}
+
+template <typename Type>
+ImageProcessing::RGBImage<Type> GaussianFilter(const ImageProcessing::RGBImage<Type> &rgbimg, const int &sizeMask, double step = 1)
+{
+    LinAlg::Matrix<Type> r = ImageProcessing::GaussianFilter<Type>(rgbimg.getRed(),sizeMask,step),
+                         g = ImageProcessing::GaussianFilter<Type>(rgbimg.getGreen(),sizeMask,step),
+                         b = ImageProcessing::GaussianFilter<Type>(rgbimg.getBlue(),sizeMask,step);
 
     ImageProcessing::RGBImage<Type> ret(r,g,b);
     return ret;

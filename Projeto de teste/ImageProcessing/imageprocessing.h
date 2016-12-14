@@ -100,6 +100,8 @@ namespace ImageProcessing
     LinAlg::Matrix<Type> GaussianFilter(const LinAlg::Matrix<Type> &mat, const int &sizeMask, double step = 1); // 0.5 <= step <= 1.2
     template <typename Type>
     LinAlg::Matrix<Type> SelfReinforcementFilter(const LinAlg::Matrix<Type> &mat, const int &sizeMask, double a = 1);
+    template <typename Type>
+    LinAlg::Matrix<Type> LineFilter(const LinAlg::Matrix<Type> &mat, const int &sizeMask, const double a = 1);
 
     template<typename Type>
     LinAlg::Matrix<bool> im2bw(const LinAlg::Matrix<Type> &mat, const unsigned &limiar);
@@ -120,6 +122,20 @@ namespace ImageProcessing
     template <typename Type>
     LinAlg::Matrix<Type> pullingOut(const LinAlg::Matrix<Type> &completingMat, const unsigned &sizemask);
 
+    //teste
+    template <typename Type>
+    LinAlg::Matrix<Type> ft2d(const LinAlg::Matrix<Type> &mat, const unsigned &sizemask)
+    {
+        LinAlg::Matrix<Type> mask(sizemask,sizemask);
+        LinAlg::Matrix<Type> ret, aux;
+        aux = ImageProcessing::completing<Type>(mat,sizemask);
+
+
+
+        ret = ImageProcessing::ApplyingMask<Type>(aux,mask);
+        ret = ImageProcessing::pullingOut<Type>(ret,sizemask);
+        return ret;
+    }
 }
 #include "ImageProcessing/imageprocessing.hpp"
 #endif // IMAGEPROCESSING_H

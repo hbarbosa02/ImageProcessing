@@ -1,4 +1,4 @@
-#include "ImageProcessing/ImageProcessing.h"
+#include "imageconversion.h"
 
 template <typename Type>
 QImage ImageProcessing::RGBImage2QImage(const ImageProcessing::RGBImage<Type> &rgbImg)
@@ -119,7 +119,7 @@ ImageProcessing::GrayImage<Type> ImageProcessing::RGBImage2GrayImage(const Image
 }
 
 template <typename Type>
-ImageProcessing::GrayImage<Type> Bitmap2GrayImage(const LinAlg::Matrix<bool> &img)
+ImageProcessing::GrayImage<Type> ImageProcessing::Bitmap2GrayImage(const LinAlg::Matrix<bool> &img)
 {
     LinAlg::Matrix<Type> gray(img.getNumberOfRows(), img.getNumberOfColumns());
 
@@ -130,15 +130,9 @@ ImageProcessing::GrayImage<Type> Bitmap2GrayImage(const LinAlg::Matrix<bool> &im
     ImageProcessing::GrayImage<Type> ret(gray);
     return ret;
 }
-
 template <typename Type>
-LinAlg::Matrix<Type> Bitmap2GrayImage(const LinAlg::Matrix<bool> &img)
+ImageProcessing::GrayImage<Type> ImageProcessing::Bitmap2GrayImage(const LinAlg::Matrix<Type> &img)
 {
-    LinAlg::Matrix<Type> ret(img.getNumberOfRows(), img.getNumberOfColumns());
-
-    for(unsigned i = 1; i <= ret.getNumberOfRows(); ++i)
-        for(unsigned j = 1; j <= ret.getNumberOfColumns(); ++j)
-            ret(i,j) = Type(img(i,j))*255;
-
+    ImageProcessing::GrayImage<Type> ret(img);
     return ret;
 }

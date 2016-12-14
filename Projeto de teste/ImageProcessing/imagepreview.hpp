@@ -1,4 +1,4 @@
-#include "ImageProcessing/ImageProcessing.h"
+#include "imagepreview.h"
 
 template <class Type>
 void ImageProcessing::imShow(QImage img,QLabel *label)

@@ -117,6 +117,8 @@ namespace ImageProcessing
     ImageProcessing::RGBImage<Type> MediaFilter(const ImageProcessing::RGBImage<Type> &rgbimg, const int &sizeMask);
     template <typename Type>
     ImageProcessing::RGBImage<Type> MedianFilter(const ImageProcessing::RGBImage<Type> &rgbimg, const int &sizeMask);
+    template <typename Type>
+    ImageProcessing::RGBImage<Type> GaussianFilter(const ImageProcessing::RGBImage<Type> &rgbimg, const int &sizeMask, double step = 1);
 
     template <typename Type>
     LinAlg::Matrix<Type> Histogram(const ImageProcessing::RGBImage<Type> &rgbimg); //ok

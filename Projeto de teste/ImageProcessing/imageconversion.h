@@ -39,8 +39,7 @@ namespace ImageProcessing
     template <typename Type>
     ImageProcessing::GrayImage<Type> Bitmap2GrayImage(const LinAlg::Matrix<bool> &img);
     template <typename Type>
-    LinAlg::Matrix<Type> Bitmap2GrayImage(const LinAlg::Matrix<bool> &img);
-
+    ImageProcessing::GrayImage<Type> Bitmap2GrayImage(const LinAlg::Matrix<Type> &img);
 
 }
 #include "ImageProcessing/imageconversion.hpp"

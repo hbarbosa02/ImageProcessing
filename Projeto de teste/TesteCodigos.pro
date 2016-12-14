@@ -128,7 +128,9 @@ HEADERS  += mainwindow.h \
     ImageProcessing/imageconversion.h \
     ImageProcessing/imageconversion.hpp \
     ImageProcessing/imagepreview.h \
-    ImageProcessing/imagepreview.hpp
+    ImageProcessing/imagepreview.hpp \
+    TesteClasses/alo.h \
+    TesteClasses/alo.hpp
 
 FORMS    += mainwindow.ui
 

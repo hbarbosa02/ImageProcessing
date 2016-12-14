@@ -12,7 +12,6 @@ namespace ImageProcessing
         public:
             GrayImage(){}
             GrayImage(const LinAlg::Matrix<Type> &gray);
-            GrayImage(const LinAlg::Matrix<bool> &gray);
             GrayImage(const ImageProcessing::GrayImage<Type> &gray);
             ~GrayImage();
 
